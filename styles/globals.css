@@ -7,3 +7,9 @@
 body {
   font-family: "Poppins", sans-serif;
 }
+
+@layer components {
+  .primary-btn {
+    @apply hover:bg-blue-600 hover:bg-opacity-20 py-2 px-3 rounded text-ellipsis hover:underline decoration-blue-600 hover:text-blue-600;
+  }
+}

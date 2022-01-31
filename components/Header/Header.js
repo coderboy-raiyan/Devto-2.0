@@ -48,12 +48,17 @@ const Header = () => {
             <li>
               <BsBell className="text-2xl" />
             </li>
+            <li className="primary-btn">
+              <Link href="/login" passHref>
+                Log in
+              </Link>
+            </li>
             <li>
-              <img
-                src="https://lh3.googleusercontent.com/ogw/ADea4I5ZvbwSXjWpuc4o-e8C3zhFmZ_zZngI6Up__d7_8Q=s32-c-mo"
-                alt=""
-                className="rounded-full"
-              />
+              <Link href="/register" passHref>
+                <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
+                  Create Account
+                </button>
+              </Link>
             </li>
           </ul>
         </div>

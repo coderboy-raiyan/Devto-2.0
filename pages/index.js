@@ -8,9 +8,10 @@ const index = () => {
       <Head>
         <title>Dev community</title>
       </Head>
-      <main>
-        <Header />
-      </main>
+
+      <Header />
+
+      <main></main>
     </div>
   );
 };
