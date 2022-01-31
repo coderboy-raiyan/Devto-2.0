@@ -1,10 +1,12 @@
 import React from "react";
+import Header from "../../components/Header/Header";
 
 const Register = () => {
   return (
-    <div>
+    <>
+      <Header />
       <h1>This is register page</h1>
-    </div>
+    </>
   );
 };
 
