@@ -18,33 +18,35 @@ const index = () => {
   });
 
   return (
-    <div>
+    <>
       <Head>
         <title>Dev community</title>
       </Head>
 
       <Header />
 
-      <main className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-6 transition-all">
-        {/* left side bar */}
+      <main className="bg-gray-100 ">
+        <div className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
+          {/* left side bar */}
 
-        <section className="lg:col-span-1 md:col-span-1 hidden md:inline-grid ">
-          <LeftSideBar />
-        </section>
+          <section className="lg:col-span-1 md:col-span-1 hidden md:inline-grid ">
+            <LeftSideBar />
+          </section>
 
-        {/* middle news feed */}
+          {/* middle news feed */}
 
-        <section className="lg:col-span-2 md:col-span-2">
-          <Feed />
-        </section>
+          <section className="lg:col-span-2 md:col-span-2">
+            <Feed />
+          </section>
 
-        {/* right side bar */}
+          {/* right side bar */}
 
-        <section className="hidden lg:inline-grid col-span-1">
-          <RightSideBar />
-        </section>
+          <section className="hidden lg:inline-grid col-span-1">
+            <RightSideBar />
+          </section>
+        </div>
       </main>
-    </div>
+    </>
   );
 };
 

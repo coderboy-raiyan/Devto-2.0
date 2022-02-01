@@ -7,7 +7,7 @@ import { RiSearchLine } from "react-icons/ri";
 
 const Header = () => {
   return (
-    <header className="bg-white shadow-sm shadow-gray-300">
+    <header className="bg-white border-b-2 border-gray-200">
       <nav className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:mx-auto max-w-3xl px-4 py-2">
         <div className="flex justify-between">
           {/* left side */}
