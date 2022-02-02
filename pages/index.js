@@ -1,3 +1,4 @@
+import axios from "axios";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -9,7 +10,7 @@ import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
 
 NProgress.configure({ showSpinner: false });
 
-const index = () => {
+const index = ({ data }) => {
   Router.events.on("routeChangeStart", () => {
     NProgress.start();
   });
@@ -36,7 +37,7 @@ const index = () => {
           {/* middle news feed */}
 
           <section className="lg:col-span-2 md:col-span-2">
-            <Feed />
+            <Feed blogs={data} />
           </section>
 
           {/* right side bar */}
@@ -49,5 +50,15 @@ const index = () => {
     </>
   );
 };
+
+// all the blogs
+export async function getServerSideProps() {
+  const res = await axios("http://localhost:3000/api/blogs");
+  const data = await res.data;
+
+  return {
+    props: { data },
+  };
+}
 
 export default index;
