@@ -73,7 +73,7 @@ const LeftSideBar = () => {
     },
   ];
   return (
-    <ul className="flex flex-col space-y-2 text-[15px]">
+    <ul className="flex flex-col space-y-2 text-[15px] px-5">
       {menus.map((links, i) => {
         return (
           <li className="primary-btn py-2 cursor-pointer" key={i}>
