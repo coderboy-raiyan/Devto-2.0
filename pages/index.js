@@ -27,7 +27,7 @@ const index = ({ data }) => {
       <Header />
 
       <main className="bg-gray-100 ">
-        <div className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
+        <div className="lg:max-w-full lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
           {/* left side bar */}
 
           <section className="lg:col-span-1 md:col-span-1 hidden md:inline-grid ">
