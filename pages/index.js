@@ -4,6 +4,7 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import React from "react";
 import Feed from "../components/Feed/Feed";
+import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
 import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
@@ -47,6 +48,10 @@ const index = ({ data }) => {
           </section>
         </div>
       </main>
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
