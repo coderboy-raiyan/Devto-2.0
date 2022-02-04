@@ -45,8 +45,8 @@ const Header = () => {
                 </button>
               </Link>
             </li>
-            <li>
-              <BsBell className="text-2xl" />
+            <li className="primary-btn cursor-pointer">
+              <BsBell className="text-2xl " />
             </li>
             <li className="primary-btn">
               <Link href="/login" passHref>
