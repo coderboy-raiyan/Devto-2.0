@@ -1,17 +1,39 @@
 import axios from "axios";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Feed from "../components/Feed/Feed";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
+import initializeAuth from "../Firebase/Firebase.init";
+import { setLoading, setUser } from "../reducers/userSlice";
 import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
 
 NProgress.configure({ showSpinner: false });
+initializeAuth();
 
-const index = ({ data }) => {
+const Index = ({ data }) => {
+  const auth = getAuth();
+  const dispatch = useDispatch();
+
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          dispatch(setUser(user));
+          console.log(user);
+        } else {
+          dispatch(setUser({}));
+        }
+        dispatch(setLoading(false));
+      }),
+    []
+  );
+
   Router.events.on("routeChangeStart", () => {
     NProgress.start();
   });
@@ -66,4 +88,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default index;
+export default Index;

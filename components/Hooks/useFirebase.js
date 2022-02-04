@@ -5,7 +5,9 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setError, setLoading, setUser } from "../../reducers/userSlice";
 import initializeAuth from "./../../Firebase/Firebase.init";
 
 const googleProvider = new GoogleAuthProvider();
@@ -13,33 +15,41 @@ const googleProvider = new GoogleAuthProvider();
 initializeAuth();
 
 const useFirebase = () => {
-  const [user, setUser] = useState({});
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const auth = getAuth();
 
   //   google sign In
   const googleSignIn = () => {
+    dispatch(setLoading(true));
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const user = result.user;
-        setError("");
+        dispatch(setError(""));
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setError(errorMessage);
+        dispatch(setError(errorMessage));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
       });
   };
 
   //   Log out
 
   const logout = () => {
+    dispatch(setLoading(true));
     signOut(auth)
       .then(() => {
-        setUser({});
+        dispatch(setUser({}));
+        dispatch(setError(""));
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setError(errorMessage);
+        dispatch(setError(errorMessage));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
       });
   };
 
@@ -47,11 +57,12 @@ const useFirebase = () => {
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          setUser(user);
+          dispatch(setUser(user));
           console.log(user);
         } else {
-          setUser({});
+          dispatch(setUser({}));
         }
+        dispatch(setLoading(false));
       }),
     []
   );
@@ -59,7 +70,6 @@ const useFirebase = () => {
   return {
     googleSignIn,
     logout,
-    user,
   };
 };
 

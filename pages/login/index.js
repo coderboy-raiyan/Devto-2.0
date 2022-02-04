@@ -36,7 +36,10 @@ const Login = () => {
               </button>
             </li>
             <li>
-              <button className="bg-gray-100 text-black hover:bg-gray-200 border-2 w-full py-3 rounded ">
+              <button
+                onClick={googleSignIn}
+                className="bg-gray-100 text-black hover:bg-gray-200 border-2 w-full py-3 rounded "
+              >
                 <FcGoogle className="inline text-xl mr-2" /> Sign up with Google
               </button>
             </li>

@@ -4,8 +4,12 @@ import Link from "next/link";
 import React from "react";
 import { BsBell } from "react-icons/bs";
 import { RiSearchLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const userData = useSelector((state) => state);
+  const { user, loading, error } = userData.user;
+
   return (
     <header className="bg-white border-b-2 border-gray-200">
       <nav className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:mx-auto max-w-3xl px-4 py-2">
@@ -37,7 +41,7 @@ const Header = () => {
           </div>
 
           {/* right side */}
-          <ul className="flex items-center space-x-4">
+          <ul className="flex items-center space-x-3">
             <li>
               <Link href="/" passHref>
                 <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
@@ -45,21 +49,37 @@ const Header = () => {
                 </button>
               </Link>
             </li>
-            <li className="primary-btn cursor-pointer">
+            <li className="primary-btn cursor-pointer relative">
               <BsBell className="text-2xl " />
+              <span className="absolute -inset-y-1 right-1 bg-red-600 text-white h-6  px-1 rounded-md font-light text-sm flex justify-center items-center animate-pulse">
+                2
+              </span>
             </li>
-            <li className="primary-btn">
-              <Link href="/login" passHref>
-                Log in
-              </Link>
-            </li>
-            <li>
-              <Link href="/register" passHref>
-                <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
-                  Create Account
-                </button>
-              </Link>
-            </li>
+            {/* if email exists */}
+            {user.email ? (
+              <li className="hover:border-gray-100 border-4 border-transparent rounded-full">
+                <img
+                  className="w-8 h-8 cursor-pointer rounded-full "
+                  src={user.photoURL}
+                  alt=""
+                />
+              </li>
+            ) : (
+              <>
+                <li className="primary-btn">
+                  <Link href="/login" passHref>
+                    Log in
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/register" passHref>
+                    <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
+                      Create Account
+                    </button>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
