@@ -4,11 +4,15 @@ import Link from "next/link";
 import React from "react";
 import { BsBell } from "react-icons/bs";
 import { RiSearchLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "../../reducers/miniProfileSlice";
+import MiniProfile from "../MiniProfile/MiniProfile";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state);
   const { user, loading, error } = userData.user;
+  const mini = useSelector((state) => state.miniProfile);
 
   return (
     <header className="bg-white border-b-2 border-gray-200">
@@ -57,13 +61,19 @@ const Header = () => {
             </li>
             {/* if email exists */}
             {user.email ? (
-              <li className="hover:border-gray-100 border-4 border-transparent rounded-full">
-                <img
-                  className="w-8 h-8 cursor-pointer rounded-full "
-                  src={user.photoURL}
-                  alt=""
-                />
-              </li>
+              <>
+                <li
+                  onClick={() => dispatch(setIsOpen(!mini.isOpen))}
+                  className="relative hover:border-gray-100 border-4 border-transparent rounded-full"
+                >
+                  <img
+                    className="w-8 h-8 cursor-pointer rounded-full "
+                    src={user.photoURL}
+                    alt=""
+                  />
+                </li>
+                <>{mini.isOpen && <MiniProfile />}</>
+              </>
             ) : (
               <>
                 <li className="primary-btn">

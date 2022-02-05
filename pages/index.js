@@ -10,6 +10,7 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
 import initializeAuth from "../Firebase/Firebase.init";
+import { setIsOpen } from "../reducers/miniProfileSlice";
 import { setLoading, setUser } from "../reducers/userSlice";
 import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
 
@@ -20,6 +21,7 @@ const Index = ({ data }) => {
   const auth = getAuth();
   const dispatch = useDispatch();
 
+  // if user logged in
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
@@ -33,6 +35,8 @@ const Index = ({ data }) => {
       }),
     []
   );
+
+  // close mini profile
 
   Router.events.on("routeChangeStart", () => {
     NProgress.start();
@@ -49,7 +53,7 @@ const Index = ({ data }) => {
 
       <Header />
 
-      <main className="bg-gray-100 ">
+      <main onClick={() => dispatch(setIsOpen(false))} className="bg-gray-100 ">
         <div className="lg:max-w-full lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
           {/* left side bar */}
 
