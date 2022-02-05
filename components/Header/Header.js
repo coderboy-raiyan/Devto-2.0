@@ -15,7 +15,7 @@ const Header = () => {
   const mini = useSelector((state) => state.miniProfile);
 
   return (
-    <header className="bg-white border-b-2 border-gray-200">
+    <div className="bg-white border-b-2 border-gray-200">
       <nav className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:mx-auto max-w-3xl px-4 py-2">
         <div className="flex justify-between">
           {/* left side */}
@@ -63,7 +63,10 @@ const Header = () => {
             {user.email ? (
               <>
                 <li
-                  onClick={() => dispatch(setIsOpen(!mini.isOpen))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(setIsOpen(!mini.isOpen));
+                  }}
                   className="relative hover:border-gray-100 border-4 border-transparent rounded-full"
                 >
                   <img
@@ -93,7 +96,7 @@ const Header = () => {
           </ul>
         </div>
       </nav>
-    </header>
+    </div>
   );
 };
 

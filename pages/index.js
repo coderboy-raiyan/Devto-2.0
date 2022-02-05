@@ -51,7 +51,13 @@ const Index = ({ data }) => {
         <title>Dev community</title>
       </Head>
 
-      <Header />
+      <header
+        onClick={(e) => {
+          dispatch(setIsOpen(false));
+        }}
+      >
+        <Header />
+      </header>
 
       <main onClick={() => dispatch(setIsOpen(false))} className="bg-gray-100 ">
         <div className="lg:max-w-full lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
