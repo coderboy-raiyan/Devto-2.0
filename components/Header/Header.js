@@ -46,22 +46,22 @@ const Header = () => {
 
           {/* right side */}
           <ul className="flex items-center space-x-3">
-            <li>
-              <Link href="/" passHref>
-                <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
-                  Create Post
-                </button>
-              </Link>
-            </li>
-            <li className="primary-btn cursor-pointer relative">
-              <BsBell className="text-2xl " />
-              <span className="absolute -inset-y-1 right-1 bg-red-600 text-white h-6  px-1 rounded-md font-light text-sm flex justify-center items-center animate-pulse">
-                2
-              </span>
-            </li>
             {/* if email exists */}
             {user.email ? (
               <>
+                <li>
+                  <Link href="/" passHref>
+                    <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
+                      Create Post
+                    </button>
+                  </Link>
+                </li>
+                <li className="primary-btn cursor-pointer relative">
+                  <BsBell className="text-2xl " />
+                  <span className="absolute -inset-y-1 right-1 bg-red-600 text-white h-6  px-1 rounded-md font-light text-sm flex justify-center items-center animate-pulse">
+                    2
+                  </span>
+                </li>
                 <li
                   onClick={(e) => {
                     e.stopPropagation();

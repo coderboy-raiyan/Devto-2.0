@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 
 const MiniProfile = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const userData = useSelector((state) => state.user);
   const { user, loading, error } = userData;
 
@@ -46,7 +48,10 @@ const MiniProfile = () => {
             <a>Settings</a>
           </Link>
         </li>
-        <li className="primary-btn text-gray-600 border-t py-3 mt-3">
+        <li
+          onClick={() => router.push("/signOutConf")}
+          className="primary-btn text-gray-600 border-t py-3 mt-3"
+        >
           <button>Sign out</button>
         </li>
       </ul>
