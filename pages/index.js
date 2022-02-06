@@ -1,9 +1,8 @@
 import axios from "axios";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import Feed from "../components/Feed/Feed";
 import Footer from "../components/Footer/Footer";
@@ -11,31 +10,13 @@ import Header from "../components/Header/Header";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
 import initializeAuth from "../Firebase/Firebase.init";
 import { setIsOpen } from "../reducers/miniProfileSlice";
-import { setLoading, setUser } from "../reducers/userSlice";
 import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
 
 NProgress.configure({ showSpinner: false });
 initializeAuth();
 
 const Index = ({ data }) => {
-  const auth = getAuth();
   const dispatch = useDispatch();
-
-  // if user logged in
-  useEffect(
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          dispatch(setUser(user));
-          console.log(user);
-        } else {
-          dispatch(setUser({}));
-        }
-        dispatch(setLoading(false));
-      }),
-    []
-  );
-
   // close mini profile
 
   Router.events.on("routeChangeStart", () => {
