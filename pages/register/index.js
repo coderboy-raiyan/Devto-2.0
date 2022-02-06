@@ -4,8 +4,11 @@ import React from "react";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import Header from "../../components/Header/Header";
+import Footer from "./../../components/Footer/Footer";
+import useFirebase from "./../../components/Hooks/useFirebase";
 
 const Register = () => {
+  const { googleSignIn, githubSignIn } = useFirebase();
   return (
     <>
       <Head>
@@ -27,12 +30,18 @@ const Register = () => {
           </div>
           <ul className="my-7 space-y-2">
             <li>
-              <button className="bg-gray-800 text-white w-full py-3 rounded mb-2 hover:bg-gray-900">
+              <button
+                onClick={githubSignIn}
+                className="bg-gray-800 text-white w-full py-3 rounded mb-2 hover:bg-gray-900"
+              >
                 <BsGithub className="inline text-xl mr-2" /> Sign up with Github
               </button>
             </li>
             <li>
-              <button className="bg-gray-100 text-black hover:bg-gray-200 border-2 w-full py-3 rounded ">
+              <button
+                onClick={googleSignIn}
+                className="bg-gray-100 text-black hover:bg-gray-200 border-2 w-full py-3 rounded "
+              >
                 <FcGoogle className="inline text-xl mr-2" /> Sign up with Google
               </button>
             </li>
@@ -45,6 +54,10 @@ const Register = () => {
           </p>
         </div>
       </section>
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

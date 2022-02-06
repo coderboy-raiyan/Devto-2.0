@@ -8,7 +8,7 @@ import Footer from "./../../components/Footer/Footer";
 import useFirebase from "./../../components/Hooks/useFirebase";
 
 const Login = () => {
-  const { googleSignIn, logout } = useFirebase();
+  const { googleSignIn, githubSignIn } = useFirebase();
 
   return (
     <>
@@ -31,7 +31,10 @@ const Login = () => {
           </div>
           <ul className="my-7 space-y-2">
             <li>
-              <button className="bg-gray-800 text-white w-full py-3 rounded mb-2 hover:bg-gray-900">
+              <button
+                onClick={githubSignIn}
+                className="bg-gray-800 text-white w-full py-3 rounded mb-2 hover:bg-gray-900"
+              >
                 <BsGithub className="inline text-xl mr-2" /> Sign up with Github
               </button>
             </li>

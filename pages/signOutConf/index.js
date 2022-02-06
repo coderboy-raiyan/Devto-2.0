@@ -2,11 +2,13 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import useFirebase from "../../components/Hooks/useFirebase";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
+import Footer from "./../../components/Footer/Footer";
 import Header from "./../../components/Header/Header";
 
 const Index = () => {
   const { logout } = useFirebase();
   const dispatch = useDispatch();
+
   return (
     <>
       <header
@@ -35,6 +37,10 @@ const Index = () => {
           </button>
         </div>
       </section>
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

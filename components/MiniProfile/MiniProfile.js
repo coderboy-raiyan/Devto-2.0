@@ -12,7 +12,9 @@ const MiniProfile = () => {
 
   return (
     <div
-      onClick={() => dispatch(setIsOpen(false))}
+      onClick={() => {
+        dispatch(setIsOpen(false));
+      }}
       className="absolute right-11 top-[51px]  shadow-lg bg-white z-40 py-2 px-4 w-72 border rounded-lg transition-all duration-500"
     >
       {/* profile  */}
