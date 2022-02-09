@@ -15,7 +15,7 @@ const MiniProfile = () => {
       onClick={() => {
         dispatch(setIsOpen(false));
       }}
-      className="absolute right-11 top-[51px]  shadow-lg bg-white z-40 py-2 px-4 w-72 border rounded-lg transition-all duration-500"
+      className="absolute right-11 top-[51px]  z-40 w-72 rounded-lg border bg-white py-2 px-4 shadow-lg transition-all duration-500"
     >
       {/* profile  */}
       <p className="primary-btn border-b py-1">
@@ -52,7 +52,7 @@ const MiniProfile = () => {
         </li>
         <li
           onClick={() => router.push("/signOutConf")}
-          className="primary-btn text-gray-600 border-t py-3 mt-3"
+          className="primary-btn mt-3 border-t py-3 text-gray-600"
         >
           <button>Sign out</button>
         </li>

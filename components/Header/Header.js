@@ -15,8 +15,8 @@ const Header = () => {
   const mini = useSelector((state) => state.miniProfile);
 
   return (
-    <div className="bg-white border-b-2 border-gray-200">
-      <nav className="lg:max-w-7xl lg:mx-auto md:max-w-7xl md:mx-auto max-w-3xl px-4 py-2">
+    <div className="border-b-2 border-gray-200 bg-white">
+      <nav className="max-w-3xl px-4 py-2 md:mx-auto md:max-w-7xl lg:mx-auto lg:max-w-7xl">
         <div className="flex justify-between">
           {/* left side */}
           <div className="flex items-center space-x-3 ">
@@ -36,11 +36,11 @@ const Header = () => {
             {/* search */}
             <div className="relative">
               <input
-                className="py-[6px] rounded border-gray-300 lg:w-[400px] w-full text-black "
+                className="w-full rounded border-gray-300 py-[6px] text-black lg:w-[400px] "
                 type="text"
                 placeholder="Search..."
               />
-              <RiSearchLine className="absolute right-0 inset-y-2 text-2xl w-10 cursor-pointer" />
+              <RiSearchLine className="absolute inset-y-2 right-0 w-10 cursor-pointer text-2xl" />
             </div>
           </div>
 
@@ -50,15 +50,15 @@ const Header = () => {
             {user.email ? (
               <>
                 <li>
-                  <Link href="/" passHref>
-                    <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
+                  <Link href="/createPost" passHref>
+                    <button className="rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
                       Create Post
                     </button>
                   </Link>
                 </li>
-                <li className="primary-btn cursor-pointer relative">
+                <li className="primary-btn relative cursor-pointer">
                   <BsBell className="text-2xl " />
-                  <span className="absolute -inset-y-1 right-1 bg-red-600 text-white h-6  px-1 rounded-md font-light text-sm flex justify-center items-center animate-pulse">
+                  <span className="absolute -inset-y-1 right-1 flex h-6 animate-pulse  items-center justify-center rounded-md bg-red-600 px-1 text-sm font-light text-white">
                     2
                   </span>
                 </li>
@@ -67,10 +67,10 @@ const Header = () => {
                     e.stopPropagation();
                     dispatch(setIsOpen(!mini.isOpen));
                   }}
-                  className="relative hover:border-gray-100 border-4 border-transparent rounded-full"
+                  className="relative rounded-full border-4 border-transparent hover:border-gray-100"
                 >
                   <img
-                    className="w-8 h-8 cursor-pointer rounded-full "
+                    className="h-8 w-8 cursor-pointer rounded-full "
                     src={user.photoURL}
                     alt=""
                   />
@@ -86,7 +86,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link href="/register" passHref>
-                    <button className="border-blue-700 border py-2 px-3 rounded-md  font-medium text-blue-700 text-[15px] hover:bg-blue-700 hover:text-white hover:underline">
+                    <button className="rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
                       Create Account
                     </button>
                   </Link>

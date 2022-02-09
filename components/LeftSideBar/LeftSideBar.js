@@ -73,13 +73,13 @@ const LeftSideBar = () => {
     },
   ];
   return (
-    <ul className="flex flex-col space-y-2 text-[15px] px-5">
+    <ul className="flex flex-col space-y-2 px-5 text-[15px]">
       {menus.map((links, i) => {
         return (
-          <li className="primary-btn py-2 cursor-pointer" key={i}>
+          <li className="primary-btn cursor-pointer py-2" key={i}>
             <Link href="/">
               <a>
-                <links.icon className="inline mr-2 text-2xl" />
+                <links.icon className="mr-2 inline text-2xl" />
                 {links.content}
               </a>
             </Link>

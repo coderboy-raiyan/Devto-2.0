@@ -17,8 +17,8 @@ const Register = () => {
       <Header />
 
       {/* UI section starts */}
-      <section className="bg-gray-100  flex justify-center  min-h-screen pt-10 px-4">
-        <div className="bg-white rounded-lg border lg:w-2/4 md:w-2/4 w-full px-16 py-16 h-full min-h-[400px] shadow-sm">
+      <section className="flex  min-h-screen justify-center  bg-gray-100 px-4 pt-10">
+        <div className="h-full min-h-[400px] w-full rounded-lg border bg-white px-16 py-16 shadow-sm md:w-2/4 lg:w-2/4">
           <div className="text-center">
             <h1 className="text-3xl font-semibold">Welcome to DEV community</h1>
             <p className="my-2 text-sm tracking-wide">
@@ -32,17 +32,17 @@ const Register = () => {
             <li>
               <button
                 onClick={githubSignIn}
-                className="bg-gray-800 text-white w-full py-3 rounded mb-2 hover:bg-gray-900"
+                className="mb-2 w-full rounded bg-gray-800 py-3 text-white hover:bg-gray-900"
               >
-                <BsGithub className="inline text-xl mr-2" /> Sign up with Github
+                <BsGithub className="mr-2 inline text-xl" /> Sign up with Github
               </button>
             </li>
             <li>
               <button
                 onClick={googleSignIn}
-                className="bg-gray-100 text-black hover:bg-gray-200 border-2 w-full py-3 rounded "
+                className="w-full rounded border-2 bg-gray-100 py-3 text-black hover:bg-gray-200 "
               >
-                <FcGoogle className="inline text-xl mr-2" /> Sign up with Google
+                <FcGoogle className="mr-2 inline text-xl" /> Sign up with Google
               </button>
             </li>
           </ul>

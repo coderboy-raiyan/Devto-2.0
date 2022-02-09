@@ -13,13 +13,13 @@ const Feed = ({ blogs }) => {
     <div>
       {/* feed header */}
       <ul className="flex space-x-7">
-        <li className="font-semibold hover:bg-white hover:text-blue-600 py-2 cursor-pointer rounded px-3">
+        <li className="cursor-pointer rounded py-2 px-3 font-semibold hover:bg-white hover:text-blue-600">
           Relevant
         </li>
-        <li className="hover:bg-white hover:text-blue-600 py-2 cursor-pointer rounded px-3">
+        <li className="cursor-pointer rounded py-2 px-3 hover:bg-white hover:text-blue-600">
           Latest
         </li>
-        <li className="hover:bg-white hover:text-blue-600 py-2 cursor-pointer rounded px-3">
+        <li className="cursor-pointer rounded py-2 px-3 hover:bg-white hover:text-blue-600">
           Top
         </li>
       </ul>
@@ -32,23 +32,23 @@ const Feed = ({ blogs }) => {
           return (
             <div
               key={blog._id}
-              className="bg-white border border-gray-300 rounded-lg my-2 cursor-pointer hover:ring-blue-700  hover:border-transparent ring-2 ring-transparent"
+              className="my-2 cursor-pointer rounded-lg border border-gray-300 bg-white ring-2  ring-transparent hover:border-transparent hover:ring-blue-700"
               onClick={() => router.push(`/blog/${blog.slug}`)}
             >
               <div>
                 <img className="rounded-t-lg" src={blog.bannerImg} alt="" />
               </div>
 
-              <div className="py-4 px-7 flex space-x-4">
+              <div className="flex space-x-4 py-4 px-7">
                 {/* userInfo */}
                 <img
-                  className="w-10 h-10 rounded-full"
+                  className="h-10 w-10 rounded-full"
                   src={blog.userImg}
                   alt=""
                 />
                 <div>
-                  <div className="text-xs mb-3">
-                    <h4 className="font-semibold mb-1">{blog.userName}</h4>
+                  <div className="mb-3 text-xs">
+                    <h4 className="mb-1 font-semibold">{blog.userName}</h4>
                     <Moment format="YYYY/MM/DD" className="text-gray-700">
                       {blog.time}
                     </Moment>
@@ -62,18 +62,18 @@ const Feed = ({ blogs }) => {
                   </Link>
 
                   {/* reaction and comments */}
-                  <div className="flex justify-between mt-4">
+                  <div className="mt-4 flex justify-between">
                     <div>
-                      <button className="py-2 px-3 hover:bg-gray-100 font-light text-sm rounded mr-2">
-                        <FcLikePlaceholder className="inline text-lg mr-1" /> 24
+                      <button className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100">
+                        <FcLikePlaceholder className="mr-1 inline text-lg" /> 24
                         reaction
                       </button>
-                      <button className="py-2 px-3 hover:bg-gray-100 font-light text-sm rounded mr-2">
-                        <FcComments className="inline text-lg mr-1" /> 4
+                      <button className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100">
+                        <FcComments className="mr-1 inline text-lg" /> 4
                         comments
                       </button>
                     </div>
-                    <button className="py-2 px-4 bg-gray-200 rounded text-sm hover:bg-gray-300 font-light">
+                    <button className="rounded bg-gray-200 py-2 px-4 text-sm font-light hover:bg-gray-300">
                       Save
                     </button>
                   </div>

@@ -41,22 +41,22 @@ const Index = ({ data }) => {
       </header>
 
       <main onClick={() => dispatch(setIsOpen(false))} className="bg-gray-100 ">
-        <div className="lg:max-w-full lg:mx-auto md:max-w-7xl md:px-4 max-w-3xl px-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-4 transition-all">
+        <div className="grid max-w-3xl grid-cols-1 px-4 py-4 transition-all md:max-w-7xl md:grid-cols-3 md:px-4 lg:mx-auto lg:max-w-full lg:grid-cols-4">
           {/* left side bar */}
 
-          <section className="lg:col-span-1 md:col-span-1 hidden md:inline-grid ">
+          <section className="hidden md:col-span-1 md:inline-grid lg:col-span-1 ">
             <LeftSideBar />
           </section>
 
           {/* middle news feed */}
 
-          <section className="lg:col-span-2 md:col-span-2">
+          <section className="md:col-span-2 lg:col-span-2">
             <Feed blogs={data} />
           </section>
 
           {/* right side bar */}
 
-          <section className="hidden lg:inline-grid col-span-1">
+          <section className="col-span-1 hidden lg:inline-grid">
             <RightSideBar />
           </section>
         </div>

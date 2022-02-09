@@ -48,18 +48,18 @@ const RightSideBar = () => {
       {/* trending tags */}
       <div className="col-span-2 mx-4 space-y-4">
         <ul
-          className="flex flex-col pt-4 rounded-lg border text-sm text-gray-700"
+          className="flex flex-col rounded-lg border pt-4 text-sm text-gray-700"
           style={{ backgroundColor: "rgba(250,250,250,1)" }}
         >
           {
-            <li className="text-lg px-4 py-2 font-semibold">
+            <li className="px-4 py-2 text-lg font-semibold">
               #{allTags[0].tagName}
             </li>
           }
 
           {allTags[0].tags.map((tag, i) => (
             <li
-              className="border-b px-4 py-5 cursor-pointer hover:bg-white hover:text-blue-600 "
+              className="cursor-pointer border-b px-4 py-5 hover:bg-white hover:text-blue-600 "
               key={i}
             >
               {tag.slug}
@@ -67,18 +67,18 @@ const RightSideBar = () => {
           ))}
         </ul>
         <ul
-          className=" flex flex-col pt-4 rounded-lg border text-sm text-gray-700"
+          className=" flex flex-col rounded-lg border pt-4 text-sm text-gray-700"
           style={{ backgroundColor: "rgba(250,250,250,1)" }}
         >
           {
-            <li className="text-lg px-4 py-2 font-semibold">
+            <li className="px-4 py-2 text-lg font-semibold">
               #{allTags[1].tagName}
             </li>
           }
 
           {allTags[1].tags.map((tag, i) => (
             <li
-              className="border-b px-4 py-5 cursor-pointer hover:bg-white hover:text-blue-600"
+              className="cursor-pointer border-b px-4 py-5 hover:bg-white hover:text-blue-600"
               key={i}
             >
               {tag.slug}

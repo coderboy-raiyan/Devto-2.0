@@ -23,15 +23,15 @@ const Index = () => {
         onClick={(e) => {
           dispatch(setIsOpen(false));
         }}
-        className="flex justify-center items-center h-screen bg-gray-100"
+        className="flex h-screen items-center justify-center bg-gray-100"
       >
-        <div className="flex justify-center flex-col items-center space-y-4">
+        <div className="flex flex-col items-center justify-center space-y-4">
           <p className="text-2xl font-semibold">
             Are you sure you want to sign out?
           </p>
           <button
             onClick={logout}
-            className="bg-blue-700 py-4 px-6 rounded text-white font-semibold text-sm hover:bg-blue-800"
+            className="rounded bg-blue-700 py-4 px-6 text-sm font-semibold text-white hover:bg-blue-800"
           >
             Yes, sign out
           </button>
