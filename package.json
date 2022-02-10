@@ -10,6 +10,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.1",
     "axios": "^0.25.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
