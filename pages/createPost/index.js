@@ -1,12 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 import { convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch } from "react-redux";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
+import useUploadImage from "./../../components/Hooks/useUploadImage";
+import LoadingBtn from "./../../components/Shared/LoadingBtn";
+
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
   {
@@ -16,11 +20,16 @@ const Editor = dynamic(
 
 const CreatePost = () => {
   const dispatch = useDispatch();
+  const imgRef = useRef();
   // these states are only used for our suggestions
   const [suggestionContent, setSuggestionContent] = useState({});
   const [whichOption, setWhichOption] = useState("title");
   // editor state
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  // upload images hook
+  const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
+    useUploadImage();
 
   // editor function handler
   const onEditorStateChange = (editorState) => {
@@ -28,6 +37,11 @@ const CreatePost = () => {
     setEditorState(editorState);
     const content = convertToRaw(editorState.getCurrentContent());
     console.log(content);
+  };
+
+  // handel Post data to database
+  const handelPost = (e) => {
+    e.preventDefault();
   };
 
   // handel suggestions
@@ -91,14 +105,66 @@ const CreatePost = () => {
               <button className="primary-btn">Preview</button>
             </div>
             <div className="h-full min-h-[500px] rounded-lg border bg-white py-6">
-              <form>
+              <form onSubmit={handelPost}>
                 <div className="px-11">
                   {/* cover image */}
                   <div>
-                    <input type="file" className="hidden" />
-                    <button className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600">
-                      Add a cover image
-                    </button>
+                    {/* show image if it's exists */}
+                    {selectedImg ? (
+                      <>
+                        {imgLoading ? (
+                          <LoadingBtn />
+                        ) : (
+                          <div className="flex h-auto w-full flex-wrap space-y-4 lg:w-[520px]">
+                            <div className="rounded-lg border-2 border-gray-300 object-contain">
+                              <img
+                                className="h-[150px] w-[300px] rounded-lg"
+                                src={finalImg}
+                                alt=""
+                              />
+                            </div>
+                            {/* remove and change button */}
+                            <div className="flex flex-wrap items-center justify-between space-x-4 px-2 text-sm">
+                              <button
+                                disabled={imgLoading}
+                                onClick={() => imgRef.current.click()}
+                                className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
+                              >
+                                Change
+                              </button>
+                              <button
+                                onClick={removeImg}
+                                className="font-semibold text-red-500"
+                              >
+                                Remove
+                              </button>
+                              <input
+                                onChange={uploadImg}
+                                ref={imgRef}
+                                type="file"
+                                className="hidden"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          onChange={uploadImg}
+                          ref={imgRef}
+                          type="file"
+                          className="hidden"
+                        />
+
+                        <button
+                          onClick={() => imgRef.current.click()}
+                          className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600"
+                        >
+                          Add a cover image
+                        </button>
+                      </>
+                    )}
                   </div>
 
                   {/* blog title */}
