@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
@@ -19,6 +20,14 @@ const Editor = dynamic(
 );
 
 const CreatePost = () => {
+  // form state
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const dispatch = useDispatch();
   const imgRef = useRef();
   // these states are only used for our suggestions
@@ -40,8 +49,10 @@ const CreatePost = () => {
   };
 
   // handel Post data to database
-  const handelPost = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    data.editorState = convertToRaw(editorState.getCurrentContent());
+    data.bannerImg = finalImg;
+    console.log(data);
   };
 
   // handel suggestions
@@ -104,146 +115,162 @@ const CreatePost = () => {
               <button className="primary-btn font-semibold">Edit</button>
               <button className="primary-btn">Preview</button>
             </div>
-            <div className="h-full min-h-[500px] rounded-lg border bg-white py-6">
-              <form onSubmit={handelPost}>
-                <div className="px-11">
-                  {/* cover image */}
-                  <div>
-                    {/* show image if it's exists */}
-                    {selectedImg ? (
-                      <>
-                        {imgLoading ? (
-                          <LoadingBtn />
-                        ) : (
-                          <div className="flex h-auto w-full flex-wrap space-y-4 lg:w-[520px]">
-                            <div className="rounded-lg border-2 border-gray-300 object-contain">
-                              <img
-                                className="h-[150px] w-[300px] rounded-lg"
-                                src={finalImg}
-                                alt=""
-                              />
+            <div className="">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="bg-white rounded-lg border py-6 h-full min-h-[400px] ">
+                  <div className="px-11">
+                    {/* cover image */}
+                    <div>
+                      {/* show image if it's exists */}
+                      {selectedImg ? (
+                        <>
+                          {imgLoading ? (
+                            <LoadingBtn />
+                          ) : (
+                            <div className="flex h-auto w-full flex-wrap space-y-4 lg:w-[520px]">
+                              <div className="rounded-lg border-2 border-gray-300 object-contain">
+                                <img
+                                  className="h-[150px] w-[300px] rounded-lg"
+                                  src={finalImg}
+                                  alt=""
+                                />
+                              </div>
+                              {/* remove and change button */}
+                              <div className="flex flex-wrap items-center justify-between space-x-4 px-2 text-sm">
+                                <button
+                                  disabled={imgLoading}
+                                  onClick={() => imgRef.current.click()}
+                                  className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
+                                >
+                                  Change
+                                </button>
+                                <button
+                                  onClick={removeImg}
+                                  className="font-semibold text-red-500"
+                                >
+                                  Remove
+                                </button>
+                                <input
+                                  onChange={uploadImg}
+                                  ref={imgRef}
+                                  type="file"
+                                  className="hidden"
+                                />
+                              </div>
                             </div>
-                            {/* remove and change button */}
-                            <div className="flex flex-wrap items-center justify-between space-x-4 px-2 text-sm">
-                              <button
-                                disabled={imgLoading}
-                                onClick={() => imgRef.current.click()}
-                                className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
-                              >
-                                Change
-                              </button>
-                              <button
-                                onClick={removeImg}
-                                className="font-semibold text-red-500"
-                              >
-                                Remove
-                              </button>
-                              <input
-                                onChange={uploadImg}
-                                ref={imgRef}
-                                type="file"
-                                className="hidden"
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <input
-                          onChange={uploadImg}
-                          ref={imgRef}
-                          type="file"
-                          className="hidden"
-                        />
+                          )}
+                        </>
+                      ) : (
+                        // Select a banner Image button
+                        <>
+                          <input
+                            onChange={uploadImg}
+                            ref={imgRef}
+                            type="file"
+                            className="hidden"
+                          />
 
-                        <button
-                          onClick={() => imgRef.current.click()}
-                          className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600"
-                        >
-                          Add a cover image
-                        </button>
-                      </>
-                    )}
+                          <button
+                            onClick={(e) => {
+                              imgRef.current.click();
+                            }}
+                            className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600"
+                          >
+                            Add a cover image
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    {/* blog title */}
+
+                    <div className="my-2">
+                      <input
+                        type="text"
+                        placeholder="New post title here..."
+                        className="w-full border-none text-2xl font-bold placeholder:tracking-wide placeholder:text-gray-700 focus:outline-none focus:ring-0 md:text-3xl lg:text-5xl"
+                        onFocus={() => handelSuggestions("title")}
+                        {...register("title")}
+                        required
+                      />
+                    </div>
+
+                    {/* blog tags */}
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Add upto 4 tags..."
+                        className="w-full focus:outline-none border-none placeholder:tracking-wider placeholder:text-gray-500 focus:ring-0"
+                        onFocus={() => handelSuggestions("tags")}
+                        {...register("tags")}
+                        required
+                      />
+                    </div>
                   </div>
 
-                  {/* blog title */}
-
-                  <div className="my-2">
-                    <input
-                      type="text"
-                      placeholder="New post title here..."
-                      className="w-full border-none text-2xl font-bold placeholder:tracking-wide placeholder:text-gray-700 focus:ring-0 md:text-3xl lg:text-5xl"
-                      onFocus={() => handelSuggestions("title")}
-                    />
-                  </div>
-
-                  {/* blog tags */}
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Add upto 4 tags..."
-                      className="w-full border-none placeholder:tracking-wider placeholder:text-gray-500 focus:ring-0"
-                      onFocus={() => handelSuggestions("tags")}
+                  <div className="my-4">
+                    <Editor
+                      placeholder="Write your post content here..."
+                      className="text-black "
+                      editorState={editorState}
+                      toolbarClassName="!py-3 !border-none !bg-[#f9f9f9] !px-11"
+                      wrapperClassName="!border-none"
+                      editorClassName="!px-11 !h-full !min-h-[200px]"
+                      onEditorStateChange={onEditorStateChange}
+                      toolbar={{
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                        link: { inDropdown: true },
+                        history: { inDropdown: true },
+                        fontFamily: {
+                          options: [
+                            "Arial",
+                            "Georgia",
+                            "Impact",
+                            "Tahoma",
+                            "Times New Roman",
+                            "Poppins",
+                          ],
+                          className: undefined,
+                          component: undefined,
+                          dropdownClassName: undefined,
+                        },
+                      }}
+                      mention={{
+                        separator: " ",
+                        trigger: "@",
+                        suggestions: [
+                          {
+                            text: "PROGRAMMER",
+                            value: "Programmer",
+                            url: "/programmer",
+                          },
+                          {
+                            text: "JAVASCRIPT",
+                            value: "javascript",
+                            url: "/javascript",
+                          },
+                          {
+                            text: "REACT",
+                            value: "React",
+                            url: "/react",
+                          },
+                        ],
+                      }}
+                      hashtag={{
+                        separator: " ",
+                        trigger: "#",
+                      }}
                     />
                   </div>
                 </div>
 
-                <div className="my-4">
-                  <Editor
-                    placeholder="Write your post content here..."
-                    className="text-black "
-                    editorState={editorState}
-                    toolbarClassName="!py-3 !border-none !bg-[#f9f9f9] !px-11"
-                    wrapperClassName="!border-none"
-                    editorClassName="!px-11 !h-full !min-h-[200px]"
-                    onEditorStateChange={onEditorStateChange}
-                    toolbar={{
-                      inline: { inDropdown: true },
-                      list: { inDropdown: true },
-                      textAlign: { inDropdown: true },
-                      link: { inDropdown: true },
-                      history: { inDropdown: true },
-                      fontFamily: {
-                        options: [
-                          "Arial",
-                          "Georgia",
-                          "Impact",
-                          "Tahoma",
-                          "Times New Roman",
-                          "Poppins",
-                        ],
-                        className: undefined,
-                        component: undefined,
-                        dropdownClassName: undefined,
-                      },
-                    }}
-                    mention={{
-                      separator: " ",
-                      trigger: "@",
-                      suggestions: [
-                        {
-                          text: "PROGRAMMER",
-                          value: "Programmer",
-                          url: "/programmer",
-                        },
-                        {
-                          text: "JAVASCRIPT",
-                          value: "javascript",
-                          url: "/javascript",
-                        },
-                        {
-                          text: "REACT",
-                          value: "React",
-                          url: "/react",
-                        },
-                      ],
-                    }}
-                    hashtag={{
-                      separator: " ",
-                      trigger: "#",
-                    }}
-                  />
+                {/* Submit buttons */}
+                <div>
+                  <button className="w-32 font-semibold my-4 py-2 px-4 bg-blue-700 text-white rounded">
+                    Publish
+                  </button>
                 </div>
               </form>
             </div>
