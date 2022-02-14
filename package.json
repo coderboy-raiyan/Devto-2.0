@@ -28,7 +28,8 @@
     "react-html-parser": "^2.0.2",
     "react-icons": "^4.3.1",
     "react-moment": "^1.1.1",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "react-reveal": "^1.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

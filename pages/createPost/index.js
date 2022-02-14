@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import cogoToast from "cogo-toast";
 import { convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -6,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import Fade from "react-reveal/Fade";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
@@ -35,6 +37,7 @@ const CreatePost = () => {
   const [whichOption, setWhichOption] = useState("title");
   // editor state
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [isTextEditorEmpty, setIsTextEditorEmpty] = useState(true);
 
   // upload images hook
   const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
@@ -45,11 +48,22 @@ const CreatePost = () => {
     handelSuggestions("editor");
     setEditorState(editorState);
     const content = convertToRaw(editorState.getCurrentContent());
-    console.log(content);
+    if (content.blocks[0].text === "") {
+      setIsTextEditorEmpty(true);
+    } else {
+      setIsTextEditorEmpty(false);
+    }
   };
 
   // handel Post data to database
   const onSubmit = (data) => {
+    if (isTextEditorEmpty) {
+      return cogoToast.warn("Your text editor is empty, Please fill it");
+    }
+    if (finalImg === "") {
+      return cogoToast.warn("Please give a cover Image of your blog");
+    }
+
     data.editorState = convertToRaw(editorState.getCurrentContent());
     data.bannerImg = finalImg;
     console.log(data);
@@ -268,7 +282,10 @@ const CreatePost = () => {
 
                 {/* Submit buttons */}
                 <div>
-                  <button className="w-32 font-semibold my-4 py-2 px-4 bg-blue-700 text-white rounded">
+                  <button
+                    // disabled={isTextEditorEmpty}
+                    className="disabled:opacity-75 hover:bg-blue-800 w-32 font-semibold my-4 py-2 px-4 bg-blue-700 text-white rounded"
+                  >
                     Publish
                   </button>
                 </div>
@@ -277,57 +294,65 @@ const CreatePost = () => {
           </div>
           {/* Editor Suggestions  */}
           <div className="hidden px-3 md:col-span-2 md:inline-grid lg:col-span-3 lg:inline-grid">
-            <div className="mt-36 grid h-2/3 grid-rows-3">
-              {/* title for editor */}
-              <div
-                className={whichOption === "title" ? "visible" : "invisible"}
-              >
-                {
-                  <div>
-                    <h1 className="text-lg font-semibold">
-                      {suggestionContent.title}
-                    </h1>
-                    <ul className="mt-2 list-disc space-y-3 px-6 text-[15px] font-light text-gray-600">
-                      {suggestionContent?.points?.map((point, i) => {
-                        return <li key={i}>{point}</li>;
-                      })}
-                    </ul>
-                  </div>
-                }
+            <Fade top>
+              <div className="mt-36 grid h-2/3 grid-rows-3">
+                {/* title for editor */}
+
+                <div
+                  className={whichOption === "title" ? "visible" : "invisible"}
+                >
+                  {
+                    <div>
+                      <h1 className="text-lg font-semibold">
+                        {suggestionContent.title}
+                      </h1>
+                      <ul className="mt-2 list-disc space-y-3 px-6 text-[15px] font-light text-gray-600">
+                        {suggestionContent?.points?.map((point, i) => {
+                          return <li key={i}>{point}</li>;
+                        })}
+                      </ul>
+                    </div>
+                  }
+                </div>
+
+                {/* tags for editor */}
+                <div
+                  className={whichOption === "tags" ? "visible" : "invisible"}
+                >
+                  {
+                    <div>
+                      <h1 className="text-lg font-semibold">
+                        {suggestionContent.title}
+                      </h1>
+                      <ul className="mt-2 list-disc space-y-3 px-6 text-[15px] font-light text-gray-600">
+                        {suggestionContent?.points?.map((point, i) => {
+                          return <li key={i}>{point}</li>;
+                        })}
+                      </ul>
+                    </div>
+                  }
+                </div>
+
+                {/* editor for editor */}
+
+                <div
+                  className={whichOption === "editor" ? "visible" : "invisible"}
+                >
+                  {
+                    <div>
+                      <h1 className="text-lg font-semibold">
+                        {suggestionContent.title}
+                      </h1>
+                      <ul className="mt-2 list-disc space-y-1 px-6 text-[15px] font-light text-gray-600">
+                        {suggestionContent?.points?.map((point, i) => {
+                          return <li key={i}>{point}</li>;
+                        })}
+                      </ul>
+                    </div>
+                  }
+                </div>
               </div>
-              {/* tags for editor */}
-              <div className={whichOption === "tags" ? "visible" : "invisible"}>
-                {
-                  <div>
-                    <h1 className="text-lg font-semibold">
-                      {suggestionContent.title}
-                    </h1>
-                    <ul className="mt-2 list-disc space-y-3 px-6 text-[15px] font-light text-gray-600">
-                      {suggestionContent?.points?.map((point, i) => {
-                        return <li key={i}>{point}</li>;
-                      })}
-                    </ul>
-                  </div>
-                }
-              </div>
-              {/* editor for editor */}
-              <div
-                className={whichOption === "editor" ? "visible" : "invisible"}
-              >
-                {
-                  <div>
-                    <h1 className="text-lg font-semibold">
-                      {suggestionContent.title}
-                    </h1>
-                    <ul className="mt-2 list-disc space-y-1 px-6 text-[15px] font-light text-gray-600">
-                      {suggestionContent?.points?.map((point, i) => {
-                        return <li key={i}>{point}</li>;
-                      })}
-                    </ul>
-                  </div>
-                }
-              </div>
-            </div>
+            </Fade>
           </div>
         </div>
       </section>
