@@ -6,8 +6,9 @@ import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
+import slugify from "react-slugify";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
@@ -39,6 +40,9 @@ const CreatePost = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isTextEditorEmpty, setIsTextEditorEmpty] = useState(true);
 
+  // user data form redux state
+  const user = useSelector((state) => state.user.user);
+
   // upload images hook
   const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
     useUploadImage();
@@ -58,15 +62,21 @@ const CreatePost = () => {
   // handel Post data to database
   const onSubmit = (data) => {
     if (isTextEditorEmpty) {
-      return cogoToast.warn("Your text editor is empty, Please fill it");
+      return cogoToast.warn("Your text editor is empty, Please fill it ");
     }
     if (finalImg === "") {
       return cogoToast.warn("Please give a cover Image of your blog");
     }
+    const slugUnique = new Date().getUTCMilliseconds();
 
     data.editorState = convertToRaw(editorState.getCurrentContent());
     data.bannerImg = finalImg;
-    console.log(data);
+    data.userName = user.displayName;
+    data.userImg = user.photoURL;
+    data.slug = slugify(data.title, {
+      prefix: `${slugUnique.toLocaleString()}`,
+    });
+    data.userEmail = user.email;
   };
 
   // handel suggestions
@@ -199,14 +209,14 @@ const CreatePost = () => {
                     {/* blog title */}
 
                     <div className="my-2">
-                      <input
+                      <textarea
                         type="text"
                         placeholder="New post title here..."
-                        className="w-full border-none text-2xl font-bold placeholder:tracking-wide placeholder:text-gray-700 focus:outline-none focus:ring-0 md:text-3xl lg:text-5xl"
+                        className="w-full border-none text-2xl font-bold placeholder:tracking-wide placeholder:text-gray-700 focus:outline-none focus:ring-0 md:text-3xl scrollbar-hide lg:text-5xl resize-none"
                         onFocus={() => handelSuggestions("title")}
                         {...register("title")}
                         required
-                      />
+                      ></textarea>
                     </div>
 
                     {/* blog tags */}

@@ -17,15 +17,21 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userEmail: {
+    type: String,
+  },
   userImg: {
     type: String,
     required: true,
+  },
+  tags: {
+    type: String,
   },
   time: {
     type: Date,
     default: Date.now,
   },
-  richText: [],
+  editorState: {},
 });
 
 export default mongoose.models.blog || mongoose.model("blog", blogSchema);
