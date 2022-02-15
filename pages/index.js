@@ -11,6 +11,7 @@ import RightSideBar from "../components/RightSideBar/RightSideBar";
 import initializeAuth from "../Firebase/Firebase.init";
 import { setIsOpen } from "../reducers/miniProfileSlice";
 import LeftSideBar from "./../components/LeftSideBar/LeftSideBar";
+import baserUrl from "./../helpers/baseUrl";
 
 NProgress.configure({ showSpinner: false });
 initializeAuth();
@@ -71,7 +72,7 @@ const Index = ({ data }) => {
 
 // all the blogs
 export async function getServerSideProps() {
-  const res = await axios("http://localhost:3000/api/blogs");
+  const res = await axios(`${baserUrl}/api/blogs`);
   const data = await res.data;
 
   return {

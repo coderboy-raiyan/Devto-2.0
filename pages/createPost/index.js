@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import axios from "axios";
 import cogoToast from "cogo-toast";
 import { convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
@@ -9,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import slugify from "react-slugify";
+import Swal from "sweetalert2";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
@@ -24,12 +26,9 @@ const Editor = dynamic(
 
 const CreatePost = () => {
   // form state
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  // is User blog posted
+  const [isPostLoading, setIsPostLoading] = useState(false);
 
   const dispatch = useDispatch();
   const imgRef = useRef();
@@ -73,10 +72,26 @@ const CreatePost = () => {
     data.bannerImg = finalImg;
     data.userName = user.displayName;
     data.userImg = user.photoURL;
-    data.slug = slugify(data.title, {
-      prefix: `${slugUnique.toLocaleString()}`,
-    });
+    data.slug = slugify(
+      data.title + " " + slugUnique.toLocaleString() + user.uid.slice(0, 3)
+    );
     data.userEmail = user.email;
+
+    // sending to database
+    setIsPostLoading(true);
+    axios
+      .post("/api/blogs", data)
+      .then((data) => {
+        console.log(data.data);
+        reset();
+        setEditorState(EditorState.createEmpty());
+        removeImg();
+        Swal.fire("Good job!", "Yaaay 🎉 blog posted successfully", "success");
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsPostLoading(false);
+      });
   };
 
   // handel suggestions
@@ -293,7 +308,7 @@ const CreatePost = () => {
                 {/* Submit buttons */}
                 <div>
                   <button
-                    // disabled={isTextEditorEmpty}
+                    disabled={isPostLoading}
                     className="disabled:opacity-75 hover:bg-blue-800 w-32 font-semibold my-4 py-2 px-4 bg-blue-700 text-white rounded"
                   >
                     Publish

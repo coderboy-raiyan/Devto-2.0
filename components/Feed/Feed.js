@@ -35,8 +35,12 @@ const Feed = ({ blogs }) => {
               className="my-2 cursor-pointer rounded-lg border border-gray-300 bg-white ring-2  ring-transparent hover:border-transparent hover:ring-blue-700"
               onClick={() => router.push(`/blog/${blog.slug}`)}
             >
-              <div>
-                <img className="rounded-t-lg" src={blog.bannerImg} alt="" />
+              <div className="object-contain">
+                <img
+                  className="rounded-t-lg w-full lg:h-[250px] md:h-[250px] h-[300px]"
+                  src={blog.bannerImg}
+                  alt=""
+                />
               </div>
 
               <div className="flex space-x-4 py-4 px-7">
@@ -49,9 +53,10 @@ const Feed = ({ blogs }) => {
                 <div>
                   <div className="mb-3 text-xs">
                     <h4 className="mb-1 font-semibold">{blog.userName}</h4>
-                    <Moment format="YYYY/MM/DD" className="text-gray-700">
-                      {blog.time}
-                    </Moment>
+                    <p className="text-gray-700">
+                      <Moment format="D MMM ">{blog.time}</Moment> (
+                      <Moment fromNow>{blog.time}</Moment>)
+                    </p>
                   </div>
 
                   {/* title */}
