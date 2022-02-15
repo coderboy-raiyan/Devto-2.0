@@ -42,7 +42,7 @@ const CreatePost = () => {
   // user data form redux state
   const user = useSelector((state) => state.user.user);
 
-  // upload images hook
+  // upload images custom hook
   const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
     useUploadImage();
 

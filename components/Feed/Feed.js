@@ -69,16 +69,25 @@ const Feed = ({ blogs }) => {
                   {/* reaction and comments */}
                   <div className="mt-4 flex justify-between">
                     <div>
-                      <button className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100">
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100"
+                      >
                         <FcLikePlaceholder className="mr-1 inline text-lg" /> 24
                         reaction
                       </button>
-                      <button className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100">
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className="mr-2 rounded py-2 px-3 text-sm font-light hover:bg-gray-100"
+                      >
                         <FcComments className="mr-1 inline text-lg" /> 4
                         comments
                       </button>
                     </div>
-                    <button className="rounded bg-gray-200 py-2 px-4 text-sm font-light hover:bg-gray-300">
+                    <button
+                      onClick={(e) => e.stopPropagation()}
+                      className="rounded bg-gray-200 py-2 px-4 text-sm font-light hover:bg-gray-300"
+                    >
                       Save
                     </button>
                   </div>
