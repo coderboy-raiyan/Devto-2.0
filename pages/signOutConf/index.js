@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { useDispatch } from "react-redux";
 import useFirebase from "../../components/Hooks/useFirebase";
@@ -11,11 +12,10 @@ const Index = () => {
 
   return (
     <>
-      <header
-        onClick={(e) => {
-          dispatch(setIsOpen(false));
-        }}
-      >
+      <Head>
+        <title>Confirm Signout - DEV community</title>
+      </Head>
+      <header>
         <Header />
       </header>
 

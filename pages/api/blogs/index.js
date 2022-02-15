@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import connectDb from "../../connectDb/connectDb";
-import allBlogs from "../../models/blogSchema";
+import allBlogs from "../../../models/blogSchema";
+import connectDb from "./../../../connectDb/connectDb";
 connectDb();
 
 export default async function blogs(req, res) {
@@ -26,6 +26,7 @@ export default async function blogs(req, res) {
 const getAllBlogs = async (req, res) => {
   allBlogs
     .find()
+    .sort("slug : 1")
     .then((all_blogs) => {
       res.status(200).json(all_blogs);
     })

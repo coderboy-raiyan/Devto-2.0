@@ -138,7 +138,7 @@ const CreatePost = () => {
       <Head>
         <title>New Post - DEV community</title>
       </Head>
-      <header onClick={() => dispatch(setIsOpen(false))}>
+      <header>
         <Header />
       </header>
 

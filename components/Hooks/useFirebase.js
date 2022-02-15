@@ -22,8 +22,6 @@ const useFirebase = () => {
   const auth = getAuth();
   const router = useRouter();
 
-  console.log(router);
-
   //   google sign In
   const googleSignIn = () => {
     dispatch(setLoading(true));

@@ -36,7 +36,7 @@ const MiniProfile = () => {
           </Link>
         </li>
         <li className="primary-btn text-[15px] text-gray-600">
-          <Link href="/">
+          <Link href="/createPost">
             <a>Create Post</a>
           </Link>
         </li>

@@ -30,14 +30,10 @@ const Index = ({ data }) => {
   return (
     <>
       <Head>
-        <title>Dev community</title>
+        <title>DEV Community</title>
       </Head>
 
-      <header
-        onClick={(e) => {
-          dispatch(setIsOpen(false));
-        }}
-      >
+      <header>
         <Header />
       </header>
 
