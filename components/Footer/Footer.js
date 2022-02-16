@@ -1,9 +1,15 @@
 import React from "react";
 import { FcVoicemail } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { setIsOpen } from "../../reducers/miniProfileSlice";
 
 const Footer = () => {
+  const dispatch = useDispatch();
   return (
-    <div className="space-y-4 bg-gray-200 py-20 text-center text-[14px] font-light">
+    <div
+      onClick={() => dispatch(setIsOpen(false))}
+      className="space-y-4 bg-gray-200 py-20 text-center text-[14px] font-light"
+    >
       <p className="">
         <span className="cursor-pointer font-semibold text-blue-600 hover:underline">
           DEV Community
