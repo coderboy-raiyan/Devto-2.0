@@ -15,9 +15,8 @@ const Index = () => {
       <Head>
         <title>Confirm Signout - DEV community</title>
       </Head>
-      <header>
-        <Header />
-      </header>
+
+      <Header />
 
       <section
         onClick={(e) => {

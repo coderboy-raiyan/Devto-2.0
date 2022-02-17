@@ -33,9 +33,7 @@ const Index = ({ data }) => {
         <title>DEV Community</title>
       </Head>
 
-      <header>
-        <Header />
-      </header>
+      <Header />
 
       <main onClick={() => dispatch(setIsOpen(false))} className="bg-gray-100 ">
         <div className="grid max-w-3xl grid-cols-1 px-4 py-4 transition-all md:max-w-7xl md:grid-cols-3 md:px-4 lg:mx-auto lg:max-w-full lg:grid-cols-4">

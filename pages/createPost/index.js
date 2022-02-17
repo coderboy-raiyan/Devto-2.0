@@ -138,9 +138,8 @@ const CreatePost = () => {
       <Head>
         <title>New Post - DEV community</title>
       </Head>
-      <header>
-        <Header />
-      </header>
+
+      <Header />
 
       <section
         className=" bg-gray-100"

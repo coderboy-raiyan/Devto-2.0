@@ -37,13 +37,13 @@ const Feed = ({ blogs }) => {
             >
               <div className="object-contain">
                 <img
-                  className="rounded-t-lg w-full lg:h-[250px] md:h-[250px] h-[300px]"
+                  className="rounded-t-lg w-full lg:h-[250px] md:h-[250px] h-full"
                   src={blog.bannerImg}
                   alt=""
                 />
               </div>
 
-              <div className="flex space-x-4 py-4 px-7">
+              <div className="flex space-x-4 py-4 lg:px-7 md:px-4 px-2">
                 {/* userInfo */}
                 <img
                   className="h-10 w-10 rounded-full"
@@ -61,7 +61,7 @@ const Feed = ({ blogs }) => {
 
                   {/* title */}
                   <Link href={`/blog/${blog.slug}`}>
-                    <a className="text-3xl font-semibold hover:text-blue-800">
+                    <a className="lg:text-3xl md:text-2xl  font-semibold hover:text-blue-800">
                       {blog.title}
                     </a>
                   </Link>

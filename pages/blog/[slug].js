@@ -13,17 +13,17 @@ import {
   RiHeart2Line,
 } from "react-icons/ri";
 import Moment from "react-moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import { setIsOpen } from "../../reducers/miniProfileSlice";
 import AuthorProfile from "./../../components/AuthorProfile/AuthorProfile";
 import baserUrl from "./../../helpers/baseUrl";
 
 const SingleBlog = ({ singleBlog }) => {
   console.log(singleBlog);
   const user = useSelector((state) => state.user.user);
-
-  console.log(singleBlog?.tags.split(" "));
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -31,15 +31,16 @@ const SingleBlog = ({ singleBlog }) => {
         <title>{singleBlog?.title} - DEV Community</title>
       </Head>
 
-      <header>
-        <Header />
-      </header>
+      <Header />
 
-      <section className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-12 md:grid-cols-8 grid-cols-1 lg:py-2 md:py-2 bg-gray-100  gap-x-2">
+      <section
+        onClick={() => dispatch(setIsOpen(false))}
+        className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-10 md:grid-cols-8 grid-cols-1 lg:py-4  md:py-2 bg-gray-100 gap-x-2"
+      >
         {/* like comments and share section */}
         <div className="lg:col-span-1 md:col-span-1 hidden lg:inline-grid md:inline-grid">
           <div className="flex justify-center items-start mt-10">
-            <ul className="space-y-4">
+            <ul className="space-y-4 fixed top-26">
               <li className="flex flex-col items-center space-y-1">
                 <button className="hover:text-red-500 hover:bg-red-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
                   <RiHeart2Line />
@@ -72,12 +73,12 @@ const SingleBlog = ({ singleBlog }) => {
         </div>
 
         {/* main blog area */}
-        <div className="lg:col-span-8 md:col-span-7">
-          <div className="bg-white border rounded-lg">
+        <div className="lg:col-span-6 md:col-span-7">
+          <div className="bg-white border border-gray-200 rounded-lg">
             {/* banner img */}
             <div className="mb-8">
               <img
-                className="w-full h-[300px] rounded-t-lg"
+                className="w-full lg:h-[300px] h-full rounded-t-lg"
                 src={singleBlog?.bannerImg}
                 alt=""
               />
@@ -122,7 +123,7 @@ const SingleBlog = ({ singleBlog }) => {
                 </ul>
               </div>
               {/* blog content */}
-              <article className="prose prose-a:text-blue-600">
+              <article className="lg:prose-xl md:prose-lg prose prose-h2:!text-base prose-h2:!font-semibold prose-h1:!text-lg prose-h1:!font-semibold prose-a:!text-blue-600 prose-strong:!text-blue-600">
                 {ReactHtmlParser(draftToHtml(singleBlog?.editorState))}
               </article>
             </div>
@@ -131,7 +132,7 @@ const SingleBlog = ({ singleBlog }) => {
 
         {/* author profile */}
         <div className="lg:col-span-3 hidden lg:inline-grid">
-          <AuthorProfile />
+          <AuthorProfile singleBlog={singleBlog} />
         </div>
       </section>
 

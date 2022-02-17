@@ -15,11 +15,11 @@ const Header = () => {
   const mini = useSelector((state) => state.miniProfile);
 
   return (
-    <div
+    <header
       onClick={() => dispatch(setIsOpen(false))}
-      className="border-b-2 border-gray-200 bg-white"
+      className="border-b-2 border-gray-200 bg-white sticky top-0 z-50"
     >
-      <nav className="max-w-3xl px-4 py-2 md:mx-auto md:max-w-7xl lg:mx-auto lg:max-w-7xl">
+      <nav className="max-w-3xl px-4 py-2 md:mx-auto md:max-w-7xl lg:mx-auto lg:max-w-7xl ">
         <div className="flex justify-between">
           {/* left side */}
           <div className="flex items-center space-x-3 ">
@@ -99,7 +99,7 @@ const Header = () => {
           </ul>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 
