@@ -25,6 +25,11 @@ const SingleBlog = ({ singleBlog }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
+  // handel Like post
+  const handelLike = () => {
+    console.log("liked");
+  };
+
   return (
     <>
       <Head>
@@ -35,14 +40,18 @@ const SingleBlog = ({ singleBlog }) => {
 
       <section
         onClick={() => dispatch(setIsOpen(false))}
-        className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-10 md:grid-cols-8 grid-cols-1 lg:py-4  md:py-2 bg-gray-100 gap-x-2"
+        className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-10 md:grid-cols-8 grid-cols-1 lg:pt-4 lg:pb-20  md:py-2 bg-gray-100 gap-x-2"
       >
         {/* like comments and share section */}
         <div className="lg:col-span-1 md:col-span-1 hidden lg:inline-grid md:inline-grid">
           <div className="flex justify-center items-start mt-10">
             <ul className="space-y-4 fixed top-26">
+              {/* like button */}
               <li className="flex flex-col items-center space-y-1">
-                <button className="hover:text-red-500 hover:bg-red-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
+                <button
+                  onClick={handelLike}
+                  className="hover:text-red-500 hover:bg-red-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
+                >
                   <RiHeart2Line />
                 </button>
                 <button className="hidden">
@@ -50,6 +59,7 @@ const SingleBlog = ({ singleBlog }) => {
                 </button>
                 <span className="font-light text-sm">2</span>
               </li>
+              {/* boost button */}
               <li className="flex flex-col items-center space-y-1">
                 <button className="hover:text-green-600 hover:bg-green-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
                   <RiEvernoteLine />
@@ -59,6 +69,7 @@ const SingleBlog = ({ singleBlog }) => {
                 </button>
                 <span className="font-light text-sm">2</span>
               </li>
+              {/* save button */}
               <li className="flex flex-col items-center space-y-1">
                 <button className="hover:text-blue-700 hover:bg-blue-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
                   <RiBookmarkLine />

@@ -4,7 +4,8 @@ import Moment from "react-moment";
 import { useSelector } from "react-redux";
 
 const AuthorProfile = ({ singleBlog }) => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state?.user?.user);
+
   return (
     <div className="mx-3 fixed">
       <div className="bg-white rounded-lg border py-2 px-4 relative">
