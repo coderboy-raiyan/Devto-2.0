@@ -56,6 +56,7 @@ const SingleBlog = ({ singleBlog }) => {
     if (!user.email) {
       return router.replace("/login");
     }
+
     // if exists then render these code
     setIsLikedLoading(true);
     const likedData = {
@@ -64,15 +65,14 @@ const SingleBlog = ({ singleBlog }) => {
     };
 
     if (switchLikeBtn) {
-      axios
-        .delete(`/api/blog/${user?.email}`, likedData)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => {
-          setIsLikedLoading(false);
-        });
+      axios({
+        method: "DELETE",
+        url: "/api/blog",
+        data: likedData,
+      }).then((res) => {
+        console.log(res.data);
+        setIsLikedLoading(false);
+      });
     } else {
       axios
         .post(`/api/blog`, likedData)

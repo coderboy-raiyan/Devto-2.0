@@ -8,9 +8,6 @@ const blog = async (req, res) => {
       case "GET":
         await getTheAllLikes(req, res);
         break;
-      case "DELETE":
-        await deleteLikeFromAPost(req, res);
-        break;
 
       default:
         break;
@@ -25,17 +22,6 @@ const getTheAllLikes = async (req, res) => {
   try {
     const blogId = req.query.id;
     const result = await likes.find({ blogId: blogId });
-    res.send(result);
-  } catch (e) {
-    res.status(500).json({ message: "There is a sever side", e });
-  }
-};
-
-// delete a like from blog
-const deleteLikeFromAPost = async (req, res) => {
-  try {
-    const email = req.query.id;
-    const result = await likes.deleteOne({ email: email });
     res.send(result);
   } catch (e) {
     res.status(500).json({ message: "There is a sever side", e });

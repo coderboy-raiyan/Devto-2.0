@@ -12,6 +12,9 @@ const blog = async (req, res) => {
       case "POST":
         await addLikeToAPost(req, res);
         break;
+      case "DELETE":
+        await deleteLike(req, res);
+        break;
 
       default:
         await getTheAllLikes(req, res);
@@ -42,6 +45,17 @@ const addLikeToAPost = async (req, res) => {
         res.send(data);
       }
     });
+  } catch (err) {
+    res.status(500).json({ message: "There is a server side" });
+  }
+};
+
+const deleteLike = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const blogId = req.body.blogId;
+    const result = await likes.deleteOne({ email: email, blogId: blogId });
+    res.send(result);
   } catch (err) {
     res.status(500).json({ message: "There is a server side" });
   }
