@@ -26,7 +26,7 @@ export default async function blogs(req, res) {
 const getAllBlogs = async (req, res) => {
   allBlogs
     .find()
-    .sort("slug : 1")
+    .sort({ time: -1 })
     .then((all_blogs) => {
       res.status(200).json(all_blogs);
     })

@@ -9,6 +9,10 @@ const blog = async (req, res) => {
         await getAPost(req, res);
         break;
 
+      case "PUT":
+        await updateAPostWithLike(req, res);
+        break;
+
       default:
         getAPost(req, res);
         break;

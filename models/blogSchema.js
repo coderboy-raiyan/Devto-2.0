@@ -18,6 +18,7 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   userEmail: {
+    required: true,
     type: String,
   },
   userImg: {
@@ -25,8 +26,10 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   tags: {
+    required: true,
     type: String,
   },
+
   time: {
     type: Date,
     default: Date.now,

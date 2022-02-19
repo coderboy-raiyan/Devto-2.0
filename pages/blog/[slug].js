@@ -2,7 +2,7 @@
 import axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import {
   RiBookmarkFill,
@@ -22,12 +22,61 @@ import baserUrl from "./../../helpers/baseUrl";
 
 const SingleBlog = ({ singleBlog }) => {
   console.log(singleBlog);
+  // user data from redux
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+  // like functionalities hooks
+  const [likes, setLikes] = useState([]);
+  const [isLikedLoading, setIsLikedLoading] = useState(false);
+  const [switchBtn, setSwitchBtn] = useState(false);
+
+  // get the all likes
+  useEffect(() => {
+    axios(`/api/blog/${singleBlog?._id}`).then((res) => {
+      setLikes(res.data);
+    });
+  }, [isLikedLoading]);
+
+  // check the like for the blog
+  useEffect(() => {
+    const isAlreadyHave = likes.find((like) => like.email === user?.email);
+
+    if (isAlreadyHave) {
+      setSwitchBtn(true);
+    } else {
+      setSwitchBtn(false);
+    }
+  }, [user, likes]);
 
   // handel Like post
   const handelLike = () => {
-    console.log("liked");
+    setIsLikedLoading(true);
+    const likedData = {
+      email: user.email,
+      blogId: singleBlog._id,
+    };
+
+    if (switchBtn) {
+      axios
+        .delete(`/api/blog/${user?.email}`, likedData)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsLikedLoading(false);
+        });
+    } else {
+      axios
+        .post(`/api/blog`, likedData)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsLikedLoading(false);
+        });
+    }
   };
 
   return (
@@ -48,16 +97,25 @@ const SingleBlog = ({ singleBlog }) => {
             <ul className="space-y-4 fixed top-26">
               {/* like button */}
               <li className="flex flex-col items-center space-y-1">
-                <button
-                  onClick={handelLike}
-                  className="hover:text-red-500 hover:bg-red-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
-                >
-                  <RiHeart2Line />
-                </button>
-                <button className="hidden">
-                  <RiHeart2Fill />
-                </button>
-                <span className="font-light text-sm">2</span>
+                {switchBtn ? (
+                  <button
+                    onClick={handelLike}
+                    disabled={isLikedLoading}
+                    className="text-red-600 hover:bg-red-100 text-2xl border-2 border-red-600 bg-red-100 py-2 px-2 rounded-full"
+                  >
+                    <RiHeart2Fill />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handelLike}
+                    disabled={isLikedLoading}
+                    className="hover:text-red-500 hover:bg-red-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
+                  >
+                    <RiHeart2Line />
+                  </button>
+                )}
+
+                <span className="font-light text-sm">{likes?.length}</span>
               </li>
               {/* boost button */}
               <li className="flex flex-col items-center space-y-1">
@@ -142,7 +200,7 @@ const SingleBlog = ({ singleBlog }) => {
         </div>
 
         {/* author profile */}
-        <div className="lg:col-span-3 hidden lg:inline-grid">
+        <div className="lg:col-span-3 hidden lg:inline-grid ">
           <AuthorProfile singleBlog={singleBlog} />
         </div>
       </section>
