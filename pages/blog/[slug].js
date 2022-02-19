@@ -70,15 +70,12 @@ const SingleBlog = ({ singleBlog }) => {
         url: "/api/blog",
         data: likedData,
       }).then((res) => {
-        console.log(res.data);
         setIsLikedLoading(false);
       });
     } else {
       axios
         .post(`/api/blog`, likedData)
-        .then((res) => {
-          console.log(res.data);
-        })
+        .then((res) => {})
         .catch((err) => console.log(err))
         .finally(() => {
           setIsLikedLoading(false);
@@ -96,14 +93,14 @@ const SingleBlog = ({ singleBlog }) => {
 
       <section
         onClick={() => dispatch(setIsOpen(false))}
-        className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-10 md:grid-cols-8 grid-cols-1 lg:pt-4 lg:pb-20  md:py-2 bg-gray-100 gap-x-2"
+        className="lg:max-w-full lg:px-auto md:max-w-7xl md:px-4 grid lg:grid-cols-10 md:grid-cols-8 grid-rows-8 lg:pt-4 lg:pb-20  md:py-2 bg-gray-100 gap-x-2"
       >
         {/* like comments and share section */}
-        <div className="lg:col-span-1 md:col-span-1 hidden lg:inline-grid md:inline-grid">
-          <div className="flex justify-center items-start mt-10">
-            <ul className="space-y-4 fixed top-26">
+        <div className="lg:col-span-1 md:col-span-1 row-span-2 lg:order-1 md:order-1 order-2 lg:inline-grid md:inline-grid">
+          <div className="like_parent_styles">
+            <ul className="like_button">
               {/* like button */}
-              <li className="flex flex-col items-center space-y-1">
+              <li className="like_button_li">
                 {switchLikeBtn ? (
                   <button
                     onClick={handelLike}
@@ -125,7 +122,7 @@ const SingleBlog = ({ singleBlog }) => {
                 <span className="font-light text-sm">{likes?.length}</span>
               </li>
               {/* boost button */}
-              <li className="flex flex-col items-center space-y-1">
+              <li className="like_button_li">
                 <button
                   disabled
                   className="hover:text-green-600 hover:bg-green-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
@@ -138,7 +135,7 @@ const SingleBlog = ({ singleBlog }) => {
                 <span className="font-light text-sm">2</span>
               </li>
               {/* save button */}
-              <li className="flex flex-col items-center space-y-1">
+              <li className="like_button_li">
                 <button
                   disabled
                   className="hover:text-blue-700 hover:bg-blue-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
@@ -155,7 +152,7 @@ const SingleBlog = ({ singleBlog }) => {
         </div>
 
         {/* main blog area */}
-        <div className="lg:col-span-6 md:col-span-7">
+        <div className="lg:col-span-6 md:col-span-7 row-span-6 order-1 lg:order-2 md:order-2">
           <div className="bg-white border border-gray-200 rounded-lg">
             {/* banner img */}
             <div className="mb-8">
@@ -213,7 +210,7 @@ const SingleBlog = ({ singleBlog }) => {
         </div>
 
         {/* author profile */}
-        <div className="lg:col-span-3 hidden lg:inline-grid ">
+        <div className="lg:col-span-3 hidden lg:inline-grid custom_author order-3">
           <AuthorProfile singleBlog={singleBlog} />
         </div>
       </section>

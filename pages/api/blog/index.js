@@ -50,6 +50,7 @@ const addLikeToAPost = async (req, res) => {
   }
 };
 
+// delete like
 const deleteLike = async (req, res) => {
   try {
     const email = req.body.email;

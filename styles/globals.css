@@ -12,6 +12,15 @@ body {
   .primary-btn {
     @apply text-ellipsis rounded py-2 px-3 decoration-blue-600 hover:bg-blue-600 hover:bg-opacity-20 hover:text-blue-600 hover:underline;
   }
+  .like_parent_styles {
+    @apply flex justify-center items-start mt-10 lg:bg-none md:bg-none bg-white lg:py-0 md:py-0 py-2 shadow shadow-gray-600 lg:shadow-none md:shadow-none lg:rounded-none md:rounded-none rounded-t-lg lg:static md:static fixed bottom-0 w-full z-20;
+  }
+  .like_button {
+    @apply lg:space-y-4 md:space-y-4 flex items-center lg:flex-col flex-row md:flex-col justify-between w-2/3 lg:fixed md:fixed;
+  }
+  .like_button_li {
+    @apply flex lg:flex-col md:flex-col flex-row items-center lg:space-y-1 space-x-2 lg:space-x-0 md:space-x-0;
+  }
 }
 
 /* loader */
