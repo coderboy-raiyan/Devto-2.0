@@ -2,6 +2,7 @@
 import axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import {
@@ -22,13 +23,14 @@ import baserUrl from "./../../helpers/baseUrl";
 
 const SingleBlog = ({ singleBlog }) => {
   console.log(singleBlog);
+  const router = useRouter();
   // user data from redux
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   // like functionalities hooks
   const [likes, setLikes] = useState([]);
   const [isLikedLoading, setIsLikedLoading] = useState(false);
-  const [switchBtn, setSwitchBtn] = useState(false);
+  const [switchLikeBtn, setSwitchLikeBtn] = useState(false);
 
   // get the all likes
   useEffect(() => {
@@ -37,26 +39,31 @@ const SingleBlog = ({ singleBlog }) => {
     });
   }, [isLikedLoading]);
 
-  // check the like for the blog
+  // check who give the like for this blog
   useEffect(() => {
     const isAlreadyHave = likes.find((like) => like.email === user?.email);
 
     if (isAlreadyHave) {
-      setSwitchBtn(true);
+      setSwitchLikeBtn(true);
     } else {
-      setSwitchBtn(false);
+      setSwitchLikeBtn(false);
     }
   }, [user, likes]);
 
   // handel Like post
   const handelLike = () => {
+    // check if user exists or not
+    if (!user.email) {
+      return router.replace("/login");
+    }
+    // if exists then render these code
     setIsLikedLoading(true);
     const likedData = {
       email: user.email,
       blogId: singleBlog._id,
     };
 
-    if (switchBtn) {
+    if (switchLikeBtn) {
       axios
         .delete(`/api/blog/${user?.email}`, likedData)
         .then((res) => {
@@ -97,7 +104,7 @@ const SingleBlog = ({ singleBlog }) => {
             <ul className="space-y-4 fixed top-26">
               {/* like button */}
               <li className="flex flex-col items-center space-y-1">
-                {switchBtn ? (
+                {switchLikeBtn ? (
                   <button
                     onClick={handelLike}
                     disabled={isLikedLoading}
@@ -119,7 +126,10 @@ const SingleBlog = ({ singleBlog }) => {
               </li>
               {/* boost button */}
               <li className="flex flex-col items-center space-y-1">
-                <button className="hover:text-green-600 hover:bg-green-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
+                <button
+                  disabled
+                  className="hover:text-green-600 hover:bg-green-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
+                >
                   <RiEvernoteLine />
                 </button>
                 <button className="hidden">
@@ -129,7 +139,10 @@ const SingleBlog = ({ singleBlog }) => {
               </li>
               {/* save button */}
               <li className="flex flex-col items-center space-y-1">
-                <button className="hover:text-blue-700 hover:bg-blue-100 text-2xl text-gray-700 py-2 px-2 rounded-full">
+                <button
+                  disabled
+                  className="hover:text-blue-700 hover:bg-blue-100 text-2xl text-gray-700 py-2 px-2 rounded-full"
+                >
                   <RiBookmarkLine />
                 </button>
                 <button className="hidden">
