@@ -1,5 +1,5 @@
-import likes from "../../../models/likeSchema";
-import connectDb from "./../../../connectDb/connectDb";
+import connectDb from "../../../../connectDb/connectDb";
+import likes from "../../../../models/likeSchema";
 connectDb();
 
 const blog = async (req, res) => {

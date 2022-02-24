@@ -5,10 +5,13 @@ import Header from "../../components/Header/Header";
 
 const Edit = () => {
   const router = useRouter();
-  console.log(router.query.slug);
 
   // load the data from database
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (router.query.slug) {
+      console.log(router.query.slug);
+    }
+  }, [router.query]);
 
   return (
     <>

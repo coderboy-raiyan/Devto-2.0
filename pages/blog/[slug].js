@@ -48,7 +48,7 @@ const SingleBlog = ({ singleBlog }) => {
 
   // get the all likes
   useEffect(() => {
-    axios(`/api/blog/${singleBlog?._id}`).then((res) => {
+    axios(`/api/blog/likes/${singleBlog?._id}`).then((res) => {
       setLikes(res.data);
     });
   }, [isLikedLoading]);
@@ -81,14 +81,14 @@ const SingleBlog = ({ singleBlog }) => {
     if (switchLikeBtn) {
       axios({
         method: "DELETE",
-        url: "/api/blog",
+        url: "/api/blog/likes",
         data: likedData,
       }).then((res) => {
         setIsLikedLoading(false);
       });
     } else {
       axios
-        .post(`/api/blog`, likedData)
+        .post(`/api/blog/likes`, likedData)
         .then((res) => {})
         .catch((err) => console.log(err))
         .finally(() => {
