@@ -38,7 +38,7 @@ const getTheAllLikes = async (req, res) => {
 // add likes to the blogs
 const addLikeToAPost = async (req, res) => {
   try {
-    const result = await new likes(req.body).save((err, data) => {
+    new likes(req.body).save((err, data) => {
       if (err) {
         res.status(500).json({ message: "There is a sever side error", err });
       } else {

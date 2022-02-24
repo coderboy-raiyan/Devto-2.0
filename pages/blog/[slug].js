@@ -32,6 +32,20 @@ const SingleBlog = ({ singleBlog }) => {
   const [isLikedLoading, setIsLikedLoading] = useState(false);
   const [switchLikeBtn, setSwitchLikeBtn] = useState(false);
 
+  // Author checking hooks
+  const [isAuthor, setIsAuthor] = useState(false);
+
+  // check the main author of the blog
+  useEffect(() => {
+    if (singleBlog?.userEmail === user?.email) {
+      setIsAuthor(true);
+    } else {
+      setIsAuthor(false);
+    }
+  }, [user]);
+
+  console.log(isAuthor);
+
   // get the all likes
   useEffect(() => {
     axios(`/api/blog/${singleBlog?._id}`).then((res) => {
@@ -80,6 +94,18 @@ const SingleBlog = ({ singleBlog }) => {
         .finally(() => {
           setIsLikedLoading(false);
         });
+    }
+  };
+
+  // handel edit button
+  const handelEdit = (slug) => {
+    if (slug) {
+      router.push({
+        pathname: "/blog/edit",
+        query: {
+          slug: slug,
+        },
+      });
     }
   };
 
@@ -165,21 +191,42 @@ const SingleBlog = ({ singleBlog }) => {
             {/* main content starts here */}
             <div className="lg:px-16 md:px-10 px-4 py-2">
               {/* author info */}
-              <div className="flex items-center space-x-2 pb-6">
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src={singleBlog?.userImg}
-                  alt=""
-                />
-                <p className="text-sm">
-                  <span className="font-semibold mb-1 block">
-                    {singleBlog?.userName}
-                  </span>
-                  <span className="text-gray-700 text-xs">
-                    <Moment format="D MMM ">{singleBlog.time}</Moment> (
-                    <Moment fromNow>{singleBlog.time}</Moment>)
-                  </span>
-                </p>
+              <div className="flex justify-between flex-wrap">
+                <div className="flex items-center space-x-2 pb-6">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={singleBlog?.userImg}
+                    alt=""
+                  />
+                  <p className="text-sm">
+                    <span className="font-semibold mb-1 block">
+                      {singleBlog?.userName}
+                    </span>
+                    <span className="text-gray-700 text-xs">
+                      <Moment format="D MMM ">{singleBlog.time}</Moment> (
+                      <Moment fromNow>{singleBlog.time}</Moment>)
+                    </span>
+                  </p>
+                </div>
+                {/* author area */}
+                {isAuthor && (
+                  <div className="">
+                    <div className="space-x-2 text-sm bg-[#FEF5E6] border border-[#f8e0b6] py-1 px-3 rounded-lg">
+                      <button
+                        onClick={() => handelEdit(singleBlog.slug)}
+                        className="p-2 hover:bg-[#F4EBDD] rounded"
+                      >
+                        Edit
+                      </button>
+                      <button className="p-2 hover:bg-[#F4EBDD] rounded">
+                        Delete
+                      </button>
+                      <button className="p-2 hover:bg-[#F4EBDD] rounded">
+                        Stats
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
               {/* blog title */}
               <div className="pb-3">

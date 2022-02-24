@@ -33,9 +33,13 @@ const AuthorProfile = ({ singleBlog }) => {
         <div>
           <p className="text-sm leading-5">
             <span className="text-gray-400 font-semibold">JOINED</span> <br />{" "}
-            <Moment className="text-gray-500" format="D MMM YYYY">
-              {user?.metadata?.creationTime}
-            </Moment>
+            {user?.metadata?.creationTime ? (
+              <Moment className="text-gray-500" format="D MMM YYYY">
+                {user?.metadata?.creationTime}
+              </Moment>
+            ) : (
+              "Loading..."
+            )}
           </p>
         </div>
       </div>
