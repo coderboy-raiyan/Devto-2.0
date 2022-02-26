@@ -36,6 +36,7 @@ const useUploadImage = () => {
   return {
     uploadImg,
     removeImg,
+    setFinalImg,
     finalImg,
     imgLoading,
     selectedImg,
