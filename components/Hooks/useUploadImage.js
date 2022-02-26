@@ -28,7 +28,7 @@ const useUploadImage = () => {
     setSelectedImg(e.target.files[0]);
   };
 
-  const removeImg = () => {
+  const removeImg = (e) => {
     setSelectedImg(null);
     setFinalImg("");
   };
@@ -37,6 +37,7 @@ const useUploadImage = () => {
     uploadImg,
     removeImg,
     setFinalImg,
+    setSelectedImg,
     finalImg,
     imgLoading,
     selectedImg,

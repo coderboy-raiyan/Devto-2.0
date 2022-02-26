@@ -152,7 +152,7 @@ const CreatePost = () => {
               <button className="primary-btn font-semibold">Edit</button>
               <button className="primary-btn">Preview</button>
             </div>
-            <div className="">
+            <div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="bg-white rounded-lg border py-6 h-full min-h-[400px] ">
                   <div className="px-11">
@@ -174,19 +174,19 @@ const CreatePost = () => {
                               </div>
                               {/* remove and change button */}
                               <div className="flex flex-wrap items-center justify-between space-x-4 px-2 text-sm">
-                                <button
+                                <a
                                   disabled={imgLoading}
                                   onClick={() => imgRef.current.click()}
-                                  className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
+                                  className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300 cursor-pointer"
                                 >
                                   Change
-                                </button>
-                                <button
+                                </a>
+                                <a
                                   onClick={removeImg}
-                                  className="font-semibold text-red-500"
+                                  className="font-semibold text-red-500 cursor-pointer"
                                 >
                                   Remove
-                                </button>
+                                </a>
                                 <input
                                   onChange={uploadImg}
                                   ref={imgRef}
@@ -207,14 +207,14 @@ const CreatePost = () => {
                             className="hidden"
                           />
 
-                          <button
+                          <a
                             onClick={(e) => {
                               imgRef.current.click();
                             }}
-                            className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600"
+                            className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600 lg:w-[174px] md:w-[174px] block cursor-pointer"
                           >
                             Add a cover image
-                          </button>
+                          </a>
                         </>
                       )}
                     </div>

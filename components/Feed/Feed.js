@@ -54,6 +54,11 @@ const Feed = ({ blogs }) => {
                   <div className="mb-3 text-xs">
                     <h4 className="mb-1 font-semibold">{blog.userName}</h4>
                     <p className="text-gray-700">
+                      {blog?.isEverUpdated && (
+                        <span className="text-green-500 font-semibold">
+                          Updated
+                        </span>
+                      )}{" "}
                       <Moment format="D MMM ">{blog.time}</Moment> (
                       <Moment fromNow>{blog.time}</Moment>)
                     </p>

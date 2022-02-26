@@ -25,6 +25,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isEverUpdated: {
+    type: Boolean,
+  },
   tags: {
     required: true,
     type: String,

@@ -203,6 +203,11 @@ const SingleBlog = ({ singleBlog }) => {
                       {singleBlog?.userName}
                     </span>
                     <span className="text-gray-700 text-xs">
+                      {singleBlog?.isEverUpdated && (
+                        <span className="text-green-500 font-semibold">
+                          Updated
+                        </span>
+                      )}{" "}
                       <Moment format="D MMM ">{singleBlog.time}</Moment> (
                       <Moment fromNow>{singleBlog.time}</Moment>)
                     </span>

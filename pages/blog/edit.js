@@ -9,8 +9,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import slugify from "react-slugify";
-import Swal from "sweetalert2";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
@@ -38,7 +36,10 @@ const Edit = () => {
   const [whichOption, setWhichOption] = useState("title");
   // editor state
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [isTextEditorEmpty, setIsTextEditorEmpty] = useState(true);
+
+  // input updated value getting by ref hooks
+  const titleRef = useRef();
+  const tagsRef = useRef();
 
   // user data form redux state
   const user = useSelector((state) => state.user.user);
@@ -48,6 +49,7 @@ const Edit = () => {
     uploadImg,
     removeImg,
     setFinalImg,
+    setSelectedImg,
     finalImg,
     imgLoading,
     selectedImg,
@@ -62,11 +64,27 @@ const Edit = () => {
     }
   }, [router.query.slug]);
 
+  // set the previous blog content
   useEffect(() => {
     if (prevBlog.editorState) {
-      const content = prevBlog.editorState;
-      const converted = convertFromRaw({ ...content });
-      console.log(converted);
+      // set the previous blog banner image
+      setFinalImg(prevBlog?.bannerImg);
+      setSelectedImg(prevBlog?.bannerImg);
+
+      // if convertToRaw doesn't exists in the editor state case handled below
+      if (!prevBlog.editorState.entityMap) {
+        const content = prevBlog.editorState;
+        const converted = EditorState.createWithContent(
+          convertFromRaw({ ...content, entityMap: {} })
+        );
+        setEditorState(converted);
+      } else {
+        const content = prevBlog.editorState;
+        const converted = EditorState.createWithContent(
+          convertFromRaw({ ...content })
+        );
+        setEditorState(converted);
+      }
     }
   }, [prevBlog]);
 
@@ -74,48 +92,47 @@ const Edit = () => {
   const onEditorStateChange = (editorState) => {
     handelSuggestions("editor");
     setEditorState(editorState);
-    const content = convertToRaw(editorState.getCurrentContent());
-    if (content.blocks[0].text === "") {
-      setIsTextEditorEmpty(true);
-    } else {
-      setIsTextEditorEmpty(false);
-    }
   };
 
   // handel Post data to database
   const onSubmit = (data) => {
-    if (isTextEditorEmpty) {
+    const content = convertToRaw(editorState.getCurrentContent());
+    if (content.blocks[0].text === "") {
       return cogoToast.warn("Your text editor is empty, Please fill it ");
     }
+
     if (finalImg === "") {
       return cogoToast.warn("Please give a cover Image of your blog");
     }
-    const slugUnique = new Date().getUTCMilliseconds();
 
+    // all datas are here
     data.editorState = convertToRaw(editorState.getCurrentContent());
     data.bannerImg = finalImg;
     data.userName = user.displayName;
     data.userImg = user.photoURL;
-    data.slug = slugify(
-      data.title + " " + slugUnique.toLocaleString() + user.uid.slice(0, 3)
-    );
+    data.slug = router?.query?.slug;
     data.userEmail = user.email;
+    data.title = titleRef.current.value;
+    data.tags = tagsRef.current.value;
+    data.isEverUpdated = true;
+    data.time = new Date().toISOString();
 
-    // sending to database
+    // sending to database and update
     setIsPostLoading(true);
     axios
-      .post("/api/blogs", data)
+      .put(`/api/blog/edit/${prevBlog._id}`, data)
       .then((data) => {
-        console.log(data.data);
-        reset();
-        setEditorState(EditorState.createEmpty());
-        removeImg();
-        Swal.fire("Good job!", "Yaaay 🎉 blog posted successfully", "success");
+        router.replace("/");
       })
       .catch((err) => console.log(err))
       .finally(() => {
         setIsPostLoading(false);
       });
+  };
+
+  // cancel the edit blog
+  const handelCancel = (e) => {
+    router.replace("/");
   };
 
   // handel suggestions
@@ -177,7 +194,7 @@ const Edit = () => {
               <button className="primary-btn font-semibold">Edit</button>
               <button className="primary-btn">Preview</button>
             </div>
-            <div className="">
+            <div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="bg-white rounded-lg border py-6 h-full min-h-[400px] ">
                   <div className="px-11">
@@ -199,19 +216,19 @@ const Edit = () => {
                               </div>
                               {/* remove and change button */}
                               <div className="flex flex-wrap items-center justify-between space-x-4 px-2 text-sm">
-                                <button
+                                <a
                                   disabled={imgLoading}
                                   onClick={() => imgRef.current.click()}
-                                  className="rounded border-2 px-3 py-2 font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
+                                  className="rounded border-2 px-3 py-2 cursor-pointer font-semibold disabled:cursor-not-allowed disabled:text-gray-300"
                                 >
                                   Change
-                                </button>
-                                <button
+                                </a>
+                                <a
                                   onClick={removeImg}
-                                  className="font-semibold text-red-500"
+                                  className="font-semibold text-red-500 cursor-pointer"
                                 >
                                   Remove
-                                </button>
+                                </a>
                                 <input
                                   onChange={uploadImg}
                                   ref={imgRef}
@@ -232,14 +249,12 @@ const Edit = () => {
                             className="hidden"
                           />
 
-                          <button
-                            onClick={(e) => {
-                              imgRef.current.click();
-                            }}
-                            className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600"
+                          <a
+                            onClick={() => imgRef.current.click()}
+                            className="rounded-lg border-2 py-3 px-4 text-sm font-semibold text-gray-600 cursor-pointer mb-2 block lg:w-[174px] md:w-[174] w-full"
                           >
                             Add a cover image
-                          </button>
+                          </a>
                         </>
                       )}
                     </div>
@@ -252,7 +267,8 @@ const Edit = () => {
                         placeholder="New post title here..."
                         className="w-full border-none text-2xl font-bold placeholder:tracking-wide placeholder:text-gray-700 focus:outline-none focus:ring-0 md:text-3xl scrollbar-hide lg:text-5xl resize-none"
                         onFocus={() => handelSuggestions("title")}
-                        {...register("title")}
+                        defaultValue={prevBlog?.title}
+                        ref={titleRef}
                         required
                       ></textarea>
                     </div>
@@ -264,7 +280,8 @@ const Edit = () => {
                         placeholder="Add upto 4 tags..."
                         className="w-full focus:outline-none border-none placeholder:tracking-wider placeholder:text-gray-500 focus:ring-0"
                         onFocus={() => handelSuggestions("tags")}
-                        {...register("tags")}
+                        defaultValue={prevBlog?.tags}
+                        ref={tagsRef}
                         required
                       />
                     </div>
@@ -329,13 +346,20 @@ const Edit = () => {
                 </div>
 
                 {/* Submit buttons */}
-                <div>
+                <div className="space-x-4">
                   <button
                     disabled={isPostLoading}
-                    className="disabled:opacity-75 hover:bg-blue-800 w-32 font-semibold my-4 py-2 px-4 bg-blue-700 text-white rounded"
+                    className="disabled:opacity-75 hover:bg-blue-800 w-32 font-semibold my-4 border-2 border-transparent py-2 px-4 bg-blue-700 text-white rounded"
                   >
-                    Publish
+                    Save
                   </button>
+                  <a
+                    disabled={isPostLoading}
+                    onClick={handelCancel}
+                    className="disabled:opacity-75 hover:text-red-500 border-2 border-transparent hover:border-red-500 hover:bg-transparent w-32 font-semibold my-4 cursor-pointer transition py-2 px-4 bg-red-500 text-white rounded"
+                  >
+                    Cancel
+                  </a>
                 </div>
               </form>
             </div>
