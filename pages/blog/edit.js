@@ -5,7 +5,7 @@ import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -95,41 +95,43 @@ const Edit = () => {
   };
 
   // handel Post data to database
-  const onSubmit = (data) => {
-    const content = convertToRaw(editorState.getCurrentContent());
-    if (content.blocks[0].text === "") {
-      return cogoToast.warn("Your text editor is empty, Please fill it ");
-    }
+  const onSubmit = useCallback(
+    (data) => {
+      const content = convertToRaw(editorState.getCurrentContent());
+      if (content.blocks[0].text === "") {
+        return cogoToast.warn("Your text editor is empty, Please fill it ");
+      }
 
-    if (finalImg === "") {
-      return cogoToast.warn("Please give a cover Image of your blog");
-    }
+      if (finalImg === "") {
+        return cogoToast.warn("Please give a cover Image of your blog");
+      }
 
-    // all datas are here
-    data.editorState = convertToRaw(editorState.getCurrentContent());
-    data.bannerImg = finalImg;
-    data.userName = user.displayName;
-    data.userImg = user.photoURL;
-    data.slug = router?.query?.slug;
-    data.userEmail = user.email;
-    data.title = titleRef.current.value;
-    data.tags = tagsRef.current.value;
-    data.isEverUpdated = true;
-    data.time = new Date().toISOString();
+      // all datas are here
+      data.editorState = convertToRaw(editorState.getCurrentContent());
+      data.bannerImg = finalImg;
+      data.userName = user.displayName;
+      data.userImg = user.photoURL;
+      data.slug = router?.query?.slug;
+      data.userEmail = user.email;
+      data.title = titleRef.current.value;
+      data.tags = tagsRef.current.value;
+      data.isEverUpdated = true;
+      data.time = new Date().toISOString();
 
-    // sending to database and update
-    setIsPostLoading(true);
-    axios
-      .put(`/api/blog/edit/${prevBlog._id}`, data)
-      .then((data) => {
-        router.replace("/");
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsPostLoading(false);
-      });
-  };
-
+      // sending to database and update
+      setIsPostLoading(true);
+      axios
+        .put(`/api/blog/edit/${prevBlog._id}`, data)
+        .then((data) => {
+          router.replace("/");
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsPostLoading(false);
+        });
+    },
+    [editorState]
+  );
   // cancel the edit blog
   const handelCancel = (e) => {
     router.replace("/");
