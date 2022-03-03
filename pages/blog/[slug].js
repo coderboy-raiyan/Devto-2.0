@@ -15,6 +15,7 @@ import {
 } from "react-icons/ri";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
@@ -22,7 +23,6 @@ import AuthorProfile from "./../../components/AuthorProfile/AuthorProfile";
 import baserUrl from "./../../helpers/baseUrl";
 
 const SingleBlog = ({ singleBlog }) => {
-  console.log(singleBlog);
   const router = useRouter();
   // user data from redux
   const user = useSelector((state) => state.user.user);
@@ -43,8 +43,6 @@ const SingleBlog = ({ singleBlog }) => {
       setIsAuthor(false);
     }
   }, [user]);
-
-  console.log(isAuthor);
 
   // get the all likes
   useEffect(() => {
@@ -107,6 +105,32 @@ const SingleBlog = ({ singleBlog }) => {
         },
       });
     }
+  };
+
+  // handel blog delete
+  const handelDeleteBlog = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this blog?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/api/blog/delete/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            router.replace("/");
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          })
+          .catch((err) => console.log(err));
+      } else {
+        Swal.fire("success!", "Ok no problem.", "success");
+      }
+    });
   };
 
   return (
@@ -223,7 +247,10 @@ const SingleBlog = ({ singleBlog }) => {
                       >
                         Edit
                       </button>
-                      <button className="p-2 hover:bg-[#F4EBDD] rounded">
+                      <button
+                        onClick={() => handelDeleteBlog(singleBlog._id)}
+                        className="p-2 hover:bg-[#F4EBDD] rounded"
+                      >
                         Delete
                       </button>
                       <button className="p-2 hover:bg-[#F4EBDD] rounded">
@@ -244,11 +271,10 @@ const SingleBlog = ({ singleBlog }) => {
               <div className="mb-8">
                 <ul className="flex  text-sm">
                   {singleBlog?.tags?.split(" ").map((tag, i) => (
-                    <li
-                      className="py-2 px-2 hover:bg-gray-200 rounded-lg border-transparent border hover:border-gray-300 cursor-pointer text-gray-700"
-                      key={i}
-                    >
-                      {tag}
+                    <li key={i}>
+                      <span className="py-2 px-2 hover:bg-gray-200 rounded-lg border-transparent border hover:border-gray-300 cursor-pointer text-gray-700">
+                        {tag}
+                      </span>
                     </li>
                   ))}
                 </ul>

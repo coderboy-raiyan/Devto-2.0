@@ -138,7 +138,7 @@ const Edit = () => {
       axios
         .put(`/api/blog/edit/${prevBlog._id}`, data)
         .then((data) => {
-          router.replace("/");
+          router.replace(`/blog/${prevBlog.slug}`);
         })
         .catch((err) => console.log(err))
         .finally(() => {
