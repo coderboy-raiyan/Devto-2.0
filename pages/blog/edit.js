@@ -9,6 +9,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
@@ -56,13 +57,14 @@ const Edit = () => {
   } = useUploadImage();
 
   // load the data from database
+
   useEffect(() => {
     if (router.query.slug) {
       axios.get(`/api/blog/edit/${router.query.slug}`).then((res) => {
         setPrevBlog(res.data);
       });
     }
-  }, [router.query.slug]);
+  }, [router, user]);
 
   // set the previous blog content
   useEffect(() => {
@@ -88,6 +90,11 @@ const Edit = () => {
     }
   }, [prevBlog]);
 
+  // handel suggestions
+  useEffect(() => {
+    handelSuggestions("title");
+  }, []);
+
   // editor function handler
   const onEditorStateChange = (editorState) => {
     handelSuggestions("editor");
@@ -98,6 +105,14 @@ const Edit = () => {
   const onSubmit = useCallback(
     (data) => {
       const content = convertToRaw(editorState.getCurrentContent());
+      if (user.email !== prevBlog.userEmail) {
+        return Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You are not allowed to submit!",
+        });
+      }
+
       if (content.blocks[0].text === "") {
         return cogoToast.warn("Your text editor is empty, Please fill it ");
       }
@@ -136,11 +151,6 @@ const Edit = () => {
   const handelCancel = (e) => {
     router.replace("/");
   };
-
-  // handel suggestions
-  useEffect(() => {
-    handelSuggestions("title");
-  }, []);
 
   const handelSuggestions = (type) => {
     if (type === "title") {
