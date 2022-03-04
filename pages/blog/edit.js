@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
+import useAuthLoading from "./../../components/Hooks/useAuthLoading";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
 import LoadingBtn from "./../../components/Shared/LoadingBtn";
 
@@ -44,6 +45,9 @@ const Edit = () => {
 
   // user data form redux state
   const user = useSelector((state) => state.user.user);
+  const { checkUserLoading } = useAuthLoading();
+
+  // Can be a string as well. Need to ensure each key-value pair ends with ;
 
   // upload images custom hook
   const {
@@ -58,10 +62,7 @@ const Edit = () => {
 
   // check if user exists
   useEffect(() => {
-    if (!user.email) {
-      router.replace("/login");
-      return <h1>Loading...</h1>;
-    }
+    checkUserLoading();
   }, []);
 
   // load the data from database
@@ -81,7 +82,7 @@ const Edit = () => {
       setFinalImg(prevBlog?.bannerImg);
       setSelectedImg(prevBlog?.bannerImg);
 
-      // if convertToRaw doesn't exists in the editor state case handled below
+      // if convertFromRaw doesn't exists in the editor state case handled below
       if (!prevBlog.editorState.entityMap) {
         const content = prevBlog.editorState;
         const converted = EditorState.createWithContent(

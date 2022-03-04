@@ -4,6 +4,7 @@ import cogoToast from "cogo-toast";
 import { convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,7 @@ import Swal from "sweetalert2";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
+import useAuthLoading from "./../../components/Hooks/useAuthLoading";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
 import LoadingBtn from "./../../components/Shared/LoadingBtn";
 
@@ -40,6 +42,15 @@ const CreatePost = () => {
 
   // user data form redux state
   const user = useSelector((state) => state.user.user);
+  const router = useRouter();
+
+  // custom hook for check if user exists
+  const { checkUserLoading } = useAuthLoading();
+
+  // check if user exists
+  useEffect(() => {
+    checkUserLoading();
+  }, []);
 
   // upload images custom hook
   const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
