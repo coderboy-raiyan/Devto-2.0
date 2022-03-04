@@ -56,6 +56,14 @@ const Edit = () => {
     selectedImg,
   } = useUploadImage();
 
+  // check if user exists
+  useEffect(() => {
+    if (!user.email) {
+      router.replace("/login");
+      return <h1>Loading...</h1>;
+    }
+  }, []);
+
   // load the data from database
 
   useEffect(() => {

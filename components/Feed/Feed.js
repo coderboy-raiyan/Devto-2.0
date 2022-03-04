@@ -47,7 +47,7 @@ const Feed = ({ blogs }) => {
                 {/* userInfo */}
                 <img
                   className="h-10 w-10 rounded-full"
-                  src={blog.userImg}
+                  src={blog?.userImg || "https://i.ibb.co/Y8szkdm/images.jpg"}
                   alt=""
                 />
                 <div>
