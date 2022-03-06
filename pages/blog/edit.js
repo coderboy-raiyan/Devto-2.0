@@ -47,8 +47,6 @@ const Edit = () => {
   const user = useSelector((state) => state.user.user);
   const isUserLoading = useSelector((state) => state.user.loading);
 
-  // Can be a string as well. Need to ensure each key-value pair ends with ;
-
   // upload images custom hook
   const {
     uploadImg,
