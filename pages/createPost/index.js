@@ -11,12 +11,12 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import slugify from "react-slugify";
 import Swal from "sweetalert2";
+import LoadingBtn from "../../components/Custom/LoadingBtn";
+import MainLoader from "../../components/Custom/MainLoader";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 import Footer from "./../../components/Footer/Footer";
-import useAuthLoading from "./../../components/Hooks/useAuthLoading";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
-import LoadingBtn from "./../../components/Shared/LoadingBtn";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
@@ -42,15 +42,8 @@ const CreatePost = () => {
 
   // user data form redux state
   const user = useSelector((state) => state.user.user);
+  const isUserLoading = useSelector((state) => state.user.loading);
   const router = useRouter();
-
-  // custom hook for check if user exists
-  const { checkUserLoading } = useAuthLoading();
-
-  // check if user exists
-  useEffect(() => {
-    checkUserLoading();
-  }, []);
 
   // upload images custom hook
   const { uploadImg, removeImg, finalImg, imgLoading, selectedImg } =
@@ -142,6 +135,16 @@ const CreatePost = () => {
       });
     }
   };
+
+  // checking if user exists or not
+  if (isUserLoading) {
+    return <MainLoader />;
+  }
+
+  if (!user.email) {
+    router.replace("/login");
+    return <MainLoader />;
+  }
 
   return (
     <>

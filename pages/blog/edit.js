@@ -10,11 +10,11 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import MainLoader from "../../components/Custom/MainLoader";
 import Header from "../../components/Header/Header";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
-import useAuthLoading from "./../../components/Hooks/useAuthLoading";
+import LoadingBtn from "./../../components/Custom/LoadingBtn";
 import useUploadImage from "./../../components/Hooks/useUploadImage";
-import LoadingBtn from "./../../components/Shared/LoadingBtn";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
@@ -45,7 +45,7 @@ const Edit = () => {
 
   // user data form redux state
   const user = useSelector((state) => state.user.user);
-  const { checkUserLoading } = useAuthLoading();
+  const isUserLoading = useSelector((state) => state.user.loading);
 
   // Can be a string as well. Need to ensure each key-value pair ends with ;
 
@@ -59,11 +59,6 @@ const Edit = () => {
     imgLoading,
     selectedImg,
   } = useUploadImage();
-
-  // check if user exists
-  useEffect(() => {
-    checkUserLoading();
-  }, []);
 
   // load the data from database
 
@@ -194,6 +189,16 @@ const Edit = () => {
       });
     }
   };
+
+  // checking if user exists or not
+  if (isUserLoading) {
+    return <MainLoader />;
+  }
+
+  if (!user.email) {
+    router.replace("/login");
+    return <MainLoader />;
+  }
 
   return (
     <>

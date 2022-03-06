@@ -11,27 +11,18 @@ const override = css`
   border-color: red;
 `;
 
-const useAuthLoading = () => {
+const MainLoader = () => {
   const user = useSelector((state) => state.user.user);
   const router = useRouter();
   const [color, setColor] = useState("#36D7B7");
 
-  const checkUserLoading = () => {
-    if (!user.email) {
-      router.replace("/login");
-      return (
-        <div className="flex justify-center items-center h-screen">
-          <div>
-            <HashLoader color={color} css={override} size={100} />;
-          </div>
-        </div>
-      );
-    }
-  };
-
-  return {
-    checkUserLoading,
-  };
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div>
+        <HashLoader color={color} css={override} size={100} />;
+      </div>
+    </div>
+  );
 };
 
-export default useAuthLoading;
+export default MainLoader;
