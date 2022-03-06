@@ -1,37 +1,28 @@
-import { css } from "@emotion/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useSelector } from "react-redux";
-import HashLoader from "react-spinners/HashLoader";
+import MainLoader from "../../components/Custom/MainLoader";
 import Header from "../../components/Header/Header";
 import Footer from "./../../components/Footer/Footer";
 import useFirebase from "./../../components/Hooks/useFirebase";
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: #36d7b7;
-`;
-
 const Login = () => {
   const { googleSignIn, githubSignIn } = useFirebase();
   const user = useSelector((state) => state.user.user);
+  const isUserLoading = useSelector((state) => state.user.loading);
   const router = useRouter();
-  const [color, setColor] = useState("#36D7B7");
+
+  if (isUserLoading) {
+    return <MainLoader />;
+  }
 
   if (user.email) {
     router.replace("/");
-    return (
-      <div className="flex justify-center items-center h-screen ">
-        <div>
-          <HashLoader color={color} css={override} size={100} />;
-        </div>
-      </div>
-    );
+    return <MainLoader />;
   }
 
   return (
