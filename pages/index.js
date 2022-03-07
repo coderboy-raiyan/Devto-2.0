@@ -2,7 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Feed from "../components/Feed/Feed";
 import Footer from "../components/Footer/Footer";
@@ -18,7 +18,21 @@ initializeAuth();
 
 const Index = ({ data }) => {
   const dispatch = useDispatch();
+  const [blogs, setBlogs] = useState(data.blogs);
   // close mini profile
+
+  console.log(blogs);
+
+  const handelLoadMore = () => {
+    axios({
+      url: `/api/blogs?size=${blogs.length}`,
+      method: "GET",
+    }).then((res) => {
+      console.log(res.data.blogs);
+      const newLoaded = [...blogs, ...res.data.blogs];
+      setBlogs(newLoaded);
+    });
+  };
 
   Router.events.on("routeChangeStart", () => {
     NProgress.start();
@@ -46,7 +60,19 @@ const Index = ({ data }) => {
           {/* middle news feed */}
 
           <section className="md:col-span-2 lg:col-span-2">
-            <Feed blogs={data} />
+            <Feed blogs={blogs} />
+
+            {/* load more button */}
+            {data.size !== blogs.length && (
+              <div>
+                <button
+                  className="bg-[#b5bdc4] text-[#08090a] mt-6 py-4 px-6 text-sm font-semibold rounded"
+                  onClick={handelLoadMore}
+                >
+                  Load more...
+                </button>
+              </div>
+            )}
           </section>
 
           {/* right side bar */}

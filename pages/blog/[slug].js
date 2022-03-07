@@ -26,6 +26,8 @@ const SingleBlog = ({ singleBlog }) => {
   const router = useRouter();
   // user data from redux
   const user = useSelector((state) => state.user.user);
+  // load the blogs length for pagination value
+
   const dispatch = useDispatch();
   // like functionalities hooks
   const [likes, setLikes] = useState([]);
@@ -304,8 +306,8 @@ const SingleBlog = ({ singleBlog }) => {
 // get the blog from database using server side rendering
 
 export async function getStaticPaths() {
-  const res = await axios(`${baserUrl}/api/blogs`);
-  const data = res.data;
+  const res = await axios(`${baserUrl}/api/blogs/allblogs`);
+  const data = res.data.blogs;
 
   const paths = data.map((blog) => ({
     params: {

@@ -8,7 +8,6 @@ import Moment from "react-moment";
 const Feed = ({ blogs }) => {
   const router = useRouter();
 
-  console.log(blogs);
   return (
     <div>
       {/* feed header */}
