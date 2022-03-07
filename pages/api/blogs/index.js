@@ -33,7 +33,7 @@ const getPaginationBlogs = async (req, res) => {
         .find()
         .sort({ time: -1 })
         .skip(loadCount)
-        .limit(loadCount);
+        .limit(3);
       res.send({ blogs: data, size: count });
     } else {
       const count = await allBlogs.countDocuments();

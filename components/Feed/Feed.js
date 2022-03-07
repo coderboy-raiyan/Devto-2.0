@@ -27,6 +27,7 @@ const Feed = ({ blogs }) => {
 
       <div>
         {/* single feed */}
+
         {blogs.map((blog) => {
           return (
             <div
