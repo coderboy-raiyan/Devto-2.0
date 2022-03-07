@@ -4,6 +4,7 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import BlogsLoader from "../components/Custom/BlogsLoader";
 import Feed from "../components/Feed/Feed";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
@@ -19,19 +20,25 @@ initializeAuth();
 const Index = ({ data }) => {
   const dispatch = useDispatch();
   const [blogs, setBlogs] = useState(data.blogs);
+  const [isBlogsLoading, setIsBlogsLoading] = useState(false);
   // close mini profile
 
   console.log(blogs);
 
   const handelLoadMore = () => {
+    setIsBlogsLoading(true);
     axios({
       url: `/api/blogs?size=${blogs.length}`,
       method: "GET",
-    }).then((res) => {
-      console.log(res.data.blogs);
-      const newLoaded = [...blogs, ...res.data.blogs];
-      setBlogs(newLoaded);
-    });
+    })
+      .then((res) => {
+        console.log(res.data.blogs);
+        const newLoaded = [...blogs, ...res.data.blogs];
+        setBlogs(newLoaded);
+      })
+      .finally(() => {
+        setIsBlogsLoading(false);
+      });
   };
 
   Router.events.on("routeChangeStart", () => {
@@ -62,11 +69,14 @@ const Index = ({ data }) => {
           <section className="md:col-span-2 lg:col-span-2">
             <Feed blogs={blogs} />
 
+            {/* loader for blogs */}
+            {isBlogsLoading && <BlogsLoader />}
+
             {/* load more button */}
             {data.size !== blogs.length && (
               <div>
                 <button
-                  className="bg-[#b5bdc4] text-[#08090a] mt-6 py-4 px-6 text-sm font-semibold rounded"
+                  className="bg-[#b5bdc4] hover:bg-[#a6a9ac] text-[#08090a] mt-6 py-4 px-6 text-sm font-semibold rounded"
                   onClick={handelLoadMore}
                 >
                   Load more...
