@@ -73,7 +73,7 @@ const Index = ({ data }) => {
             {isBlogsLoading && <BlogsLoader />}
 
             {/* load more button */}
-            {data.size !== blogs.length && (
+            {data.size !== blogs?.length && (
               <div>
                 <button
                   className="bg-[#b5bdc4] hover:bg-[#a6a9ac] text-[#08090a] mt-6 py-4 px-6 text-sm font-semibold rounded"
