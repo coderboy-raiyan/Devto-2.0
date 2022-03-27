@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import MainLoader from "../../components/Custom/MainLoader";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import useFirebase from "../../components/Hooks/useFirebase";
+import useFirebase from "../../Hooks/useFirebase";
 
 function Login() {
     const { googleSignIn, githubSignIn } = useFirebase();

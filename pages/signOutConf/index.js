@@ -6,7 +6,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import useFirebase from "../../components/Hooks/useFirebase";
+import useFirebase from "../../Hooks/useFirebase";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 
 function Index() {

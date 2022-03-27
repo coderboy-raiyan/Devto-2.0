@@ -9,8 +9,8 @@ import {
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import initializeAuth from "../../Firebase/Firebase.init";
-import { setError, setLoading, setUser } from "../../reducers/userSlice";
+import initializeAuth from "../Firebase/Firebase.init";
+import { setError, setLoading, setUser } from "../reducers/userSlice";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
