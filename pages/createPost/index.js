@@ -27,7 +27,7 @@ import LoadingBtn from "../../components/Custom/LoadingBtn";
 import MainLoader from "../../components/Custom/MainLoader";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import useUploadImage from "../../components/Hooks/useUploadImage";
+import useUploadImage from "../../Hooks/useUploadImage";
 import { setIsOpen } from "../../reducers/miniProfileSlice";
 
 const Editor = dynamic(() => import("react-draft-wysiwyg").then((module) => module.Editor), {
