@@ -7,7 +7,7 @@ export default async function blogs(req, res) {
   try {
     switch (req.method) {
       case "GET":
-        await getAllBlogs(req, res);
+        await getPaginationBlogs(req, res);
         break;
 
       case "POST":
@@ -15,7 +15,7 @@ export default async function blogs(req, res) {
         break;
 
       default:
-        await getAllBlogs(req, res);
+        await getPaginationBlogs(req, res);
         break;
     }
   } catch (err) {
@@ -23,16 +23,27 @@ export default async function blogs(req, res) {
   }
 }
 
-const getAllBlogs = async (req, res) => {
-  allBlogs
-    .find()
-    .sort({ time: -1 })
-    .then((all_blogs) => {
-      res.status(200).json(all_blogs);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+// this works for pagination blogs
+const getPaginationBlogs = async (req, res) => {
+  try {
+    const loadCount = Number(req.query.size);
+    if (loadCount) {
+      const count = await allBlogs.countDocuments();
+      const data = await allBlogs
+        .find()
+        .sort({ time: -1 })
+        .skip(loadCount)
+        .limit(3);
+      res.send({ blogs: data, size: count });
+    } else {
+      const count = await allBlogs.countDocuments();
+      const data = await allBlogs.find().sort({ time: -1 }).limit(3);
+      res.send({ blogs: data, size: count });
+      console.log("else", loadCount);
+    }
+  } catch (err) {
+    res.status(500).json({ message: "There is a server side error", err });
+  }
 };
 
 const postBlog = async (req, res) => {
