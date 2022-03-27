@@ -1,26 +1,27 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {},
-  loading: true,
-  error: "",
+    user: {},
+    loading: true,
+    error: "",
 };
 
 export const userSlice = createSlice({
-  name: "User",
-  initialState,
+    name: "User",
+    initialState,
 
-  reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        },
     },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-  },
 });
 
 export const { setUser, setError, setLoading } = userSlice.actions;

@@ -1,18 +1,19 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isOpen: false,
+    isOpen: false,
 };
 
 export const miniProfileSlice = createSlice({
-  name: "miniProfile",
-  initialState,
+    name: "miniProfile",
+    initialState,
 
-  reducers: {
-    setIsOpen: (state, action) => {
-      state.isOpen = action.payload;
+    reducers: {
+        setIsOpen: (state, action) => {
+            state.isOpen = action.payload;
+        },
     },
-  },
 });
 
 export const { setIsOpen } = miniProfileSlice.actions;
