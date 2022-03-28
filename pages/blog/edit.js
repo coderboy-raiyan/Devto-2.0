@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import LoadingBtn from "../../components/Custom/LoadingBtn";
 import Header from "../../components/Header/Header";
@@ -56,7 +56,6 @@ function Edit() {
 
     // user data form redux state
     const { user } = useAuth();
-    const isUserLoading = useSelector((state) => state.user.loading);
 
     // upload images custom hook
     const { uploadImg, removeImg, setFinalImg, setSelectedImg, finalImg, imgLoading, selectedImg } =
