@@ -3,7 +3,7 @@
 import React from "react";
 import { FcVoicemail } from "react-icons/fc";
 import { useDispatch } from "react-redux";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 function Footer() {
     const dispatch = useDispatch();

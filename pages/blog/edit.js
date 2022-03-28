@@ -22,13 +22,13 @@ import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import LoadingBtn from "../../components/Custom/LoadingBtn";
-import MainLoader from "../../components/Custom/MainLoader";
 import Header from "../../components/Header/Header";
-import useUploadImage from "../../components/Hooks/useUploadImage";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import useAuth from "../../Hooks/useAuth";
+import useUploadImage from "../../Hooks/useUploadImage";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 const Editor = dynamic(() => import("react-draft-wysiwyg").then((module) => module.Editor), {
     ssr: false,
@@ -55,8 +55,7 @@ function Edit() {
     const tagsRef = useRef();
 
     // user data form redux state
-    const user = useSelector((state) => state.user.user);
-    const isUserLoading = useSelector((state) => state.user.loading);
+    const { user } = useAuth();
 
     // upload images custom hook
     const { uploadImg, removeImg, setFinalImg, setSelectedImg, finalImg, imgLoading, selectedImg } =
@@ -189,16 +188,6 @@ function Edit() {
             });
         }
     };
-
-    // checking if user exists or not
-    if (isUserLoading) {
-        return <MainLoader />;
-    }
-
-    if (!user.email) {
-        router.replace("/login");
-        return <MainLoader />;
-    }
 
     return (
         <>
