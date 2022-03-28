@@ -1,24 +1,17 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+import UnAuthenticatedLayout from "../../components/Layouts/UnAuthenticatedLayout";
 import useAuth from "../../Hooks/useAuth";
 
 function Login() {
     const { googleSignIn, githubSignIn } = useAuth();
 
     return (
-        <>
-            <Head>
-                <title>Welcome! - DEV community</title>
-            </Head>
-            <Header />
-
+        <UnAuthenticatedLayout title="Welcome! - DEV community">
             {/* UI section starts */}
             <section className="flex  min-h-screen justify-center  bg-gray-100 px-4 pt-10">
                 <div className="h-full min-h-[400px] w-full rounded-lg border bg-white px-16 py-16 shadow-sm md:w-2/4 lg:w-2/4">
@@ -52,11 +45,7 @@ function Login() {
                     <p className="text-center text-sm">Continue with your email address</p>
                 </div>
             </section>
-
-            <footer>
-                <Footer />
-            </footer>
-        </>
+        </UnAuthenticatedLayout>
     );
 }
 

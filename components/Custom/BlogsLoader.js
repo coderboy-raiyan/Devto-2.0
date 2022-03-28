@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 import { css } from "@emotion/react";
 import React, { useState } from "react";

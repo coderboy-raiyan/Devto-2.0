@@ -114,6 +114,9 @@ function SingleBlog({ singleBlog }) {
 
     // handel edit button
     const handelEdit = (slug) => {
+        if (!user.email) {
+            return router.replace("/login");
+        }
         if (slug) {
             router.push({
                 pathname: "/blog/edit",
@@ -126,6 +129,9 @@ function SingleBlog({ singleBlog }) {
 
     // handel blog delete
     const handelDeleteBlog = (id) => {
+        if (!user.email) {
+            return router.replace("/login");
+        }
         Swal.fire({
             title: "Are you sure?",
             text: "You want to delete this blog?",

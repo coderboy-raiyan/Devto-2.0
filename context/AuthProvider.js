@@ -11,6 +11,7 @@ import {
     signOut,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
+import PageLoader from "../components/common/PageLoader";
 import initializeAuth from "../Firebase/Firebase.init";
 
 initializeAuth();
@@ -95,7 +96,7 @@ function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={returnObj}>
-            {loading ? "Loading" : children}
+            {loading ? <PageLoader /> : children}
         </AuthContext.Provider>
     );
 }
