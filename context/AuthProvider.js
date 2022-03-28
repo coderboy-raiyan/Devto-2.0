@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import {
@@ -8,7 +10,7 @@ import {
     signInWithPopup,
     signOut,
 } from "firebase/auth";
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import initializeAuth from "../Firebase/Firebase.init";
 
 initializeAuth();
@@ -59,6 +61,7 @@ function AuthProvider({ children }) {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     setUser(user);
+                    console.log(user);
                 } else {
                     setUser({});
                 }
@@ -79,8 +82,8 @@ function AuthProvider({ children }) {
         }
     };
 
-    const returnObj = useMemo(
-        () => user,
+    const returnObj = {
+        user,
         error,
         loading,
         authLoading,
@@ -88,8 +91,7 @@ function AuthProvider({ children }) {
         githubSignIn,
         logout,
         setError,
-        [auth]
-    );
+    };
 
     return (
         <AuthContext.Provider value={returnObj}>

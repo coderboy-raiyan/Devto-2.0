@@ -17,7 +17,7 @@ import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../components/RightSideBar/RightSideBar";
 import initializeAuth from "../Firebase/Firebase.init";
 import baserUrl from "../helpers/baseUrl";
-import { setIsOpen } from "../reducers/miniProfileSlice";
+import { setIsOpen } from "../redux/reducers/miniProfileSlice";
 
 NProgress.configure({ showSpinner: false });
 initializeAuth();

@@ -3,10 +3,10 @@
 
 import React from "react";
 import Moment from "react-moment";
-import { useSelector } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
 
 function AuthorProfile({ singleBlog }) {
-    const user = useSelector((state) => state?.user?.user);
+    const { user } = useAuth();
 
     return (
         <div className="mx-3 fixed  lg:w-[380px] ">

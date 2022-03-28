@@ -25,10 +25,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import LoadingBtn from "../../components/Custom/LoadingBtn";
-import MainLoader from "../../components/Custom/MainLoader";
 import Header from "../../components/Header/Header";
+import useAuth from "../../Hooks/useAuth";
 import useUploadImage from "../../Hooks/useUploadImage";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 const Editor = dynamic(() => import("react-draft-wysiwyg").then((module) => module.Editor), {
     ssr: false,
@@ -55,7 +55,7 @@ function Edit() {
     const tagsRef = useRef();
 
     // user data form redux state
-    const user = useSelector((state) => state.user.user);
+    const { user } = useAuth();
     const isUserLoading = useSelector((state) => state.user.loading);
 
     // upload images custom hook
@@ -189,16 +189,6 @@ function Edit() {
             });
         }
     };
-
-    // checking if user exists or not
-    if (isUserLoading) {
-        return <MainLoader />;
-    }
-
-    if (!user.email) {
-        router.replace("/login");
-        return <MainLoader />;
-    }
 
     return (
         <>

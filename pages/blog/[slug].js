@@ -28,18 +28,19 @@ import {
     RiHeart2Line,
 } from "react-icons/ri";
 import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import AuthorProfile from "../../components/AuthorProfile/AuthorProfile";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import baserUrl from "../../helpers/baseUrl";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import useAuth from "../../Hooks/useAuth";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 function SingleBlog({ singleBlog }) {
     const router = useRouter();
     // user data from redux
-    const user = useSelector((state) => state.user.user);
+    const { user } = useAuth();
     // load the blogs length for pagination value
 
     const dispatch = useDispatch();

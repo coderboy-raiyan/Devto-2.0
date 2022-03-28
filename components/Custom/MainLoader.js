@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { css } from "@emotion/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import HashLoader from "react-spinners/HashLoader";
 
 // Can be a string as well. Need to ensure each key-value pair ends with ;
@@ -13,8 +11,6 @@ const override = css`
 `;
 
 function MainLoader() {
-    const user = useSelector((state) => state.user.user);
-    const router = useRouter();
     const [color, setColor] = useState("#36D7B7");
 
     return (
