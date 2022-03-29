@@ -6,12 +6,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import useFirebase from "../../components/Hooks/useFirebase";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import useAuth from "../../Hooks/useAuth";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 function Index() {
-    const { logout } = useFirebase();
     const dispatch = useDispatch();
+    const { logout } = useAuth();
 
     return (
         <>

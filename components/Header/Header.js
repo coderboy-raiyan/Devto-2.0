@@ -9,13 +9,13 @@ import React from "react";
 import { BsBell } from "react-icons/bs";
 import { RiSearchLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import useAuth from "../../Hooks/useAuth";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 import MiniProfile from "../MiniProfile/MiniProfile";
 
 function Header() {
     const dispatch = useDispatch();
-    const userData = useSelector((state) => state);
-    const { user, loading, error } = userData.user;
+    const { user } = useAuth();
     const mini = useSelector((state) => state.miniProfile);
 
     return (

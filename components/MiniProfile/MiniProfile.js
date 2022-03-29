@@ -6,14 +6,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsOpen } from "../../reducers/miniProfileSlice";
+import { useDispatch } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
+import { setIsOpen } from "../../redux/reducers/miniProfileSlice";
 
 function MiniProfile() {
     const dispatch = useDispatch();
     const router = useRouter();
-    const userData = useSelector((state) => state.user);
-    const { user, loading, error } = userData;
+    const { user } = useAuth();
 
     return (
         <div

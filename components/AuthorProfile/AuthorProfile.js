@@ -3,10 +3,10 @@
 
 import React from "react";
 import Moment from "react-moment";
-import { useSelector } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
 
 function AuthorProfile({ singleBlog }) {
-    const user = useSelector((state) => state?.user?.user);
+    const { user } = useAuth();
 
     return (
         <div className="mx-3 fixed  lg:w-[380px] ">
@@ -27,16 +27,18 @@ function AuthorProfile({ singleBlog }) {
                 </div>
                 {/* basic info */}
                 <div>
-                    <p className="text-sm leading-5">
-                        <span className="text-gray-400 font-semibold">JOINED</span> <br />{" "}
-                        {user?.metadata?.creationTime ? (
-                            <Moment className="text-gray-500" format="D MMM YYYY">
-                                {user?.metadata?.creationTime}
-                            </Moment>
-                        ) : (
-                            "Loading..."
-                        )}
-                    </p>
+                    {user.email && (
+                        <p className="text-sm leading-5">
+                            <span className="text-gray-400 font-semibold">JOINED</span> <br />{" "}
+                            {user?.metadata?.creationTime ? (
+                                <Moment className="text-gray-500" format="D MMM YYYY">
+                                    {user?.metadata?.creationTime}
+                                </Moment>
+                            ) : (
+                                "Loading..."
+                            )}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
