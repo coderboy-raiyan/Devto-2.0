@@ -326,35 +326,7 @@ function SingleBlog({ singleBlog }) {
 
 // get the blog from database using server side rendering
 
-export async function getServerSideProps({ params }) {
-    const res = await axios(`${baserUrl}/api/blogs/${params.slug}`);
-    const singleBlog = res.data;
-
-    return {
-        props: {
-            singleBlog,
-        },
-        revalidate: 10,
-    };
-}
-
-// export async function getStaticPaths() {
-//     const res = await axios(`${baserUrl}/api/blogs/allblogs`);
-//     const data = res.data.blogs;
-
-//     const paths = data.map((blog) => ({
-//         params: {
-//             slug: blog?.slug,
-//         },
-//     }));
-
-//     return {
-//         paths,
-//         fallback: false,
-//     };
-// }
-
-// export async function getStaticProps({ params }) {
+// export async function getServerSideProps({ params }) {
 //     const res = await axios(`${baserUrl}/api/blogs/${params.slug}`);
 //     const singleBlog = res.data;
 
@@ -365,5 +337,33 @@ export async function getServerSideProps({ params }) {
 //         revalidate: 10,
 //     };
 // }
+
+export async function getStaticPaths() {
+    const res = await axios(`${baserUrl}/api/blogs/allblogs`);
+    const data = res.data.blogs;
+
+    const paths = data.map((blog) => ({
+        params: {
+            slug: blog?.slug,
+        },
+    }));
+
+    return {
+        paths,
+        fallback: false,
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const res = await axios(`${baserUrl}/api/blogs/${params.slug}`);
+    const singleBlog = res.data;
+
+    return {
+        props: {
+            singleBlog,
+        },
+        revalidate: 10,
+    };
+}
 
 export default SingleBlog;
