@@ -56,9 +56,9 @@ function Header() {
                         {/* if email exists */}
                         {user.email ? (
                             <>
-                                <li>
+                                <li className="hidden lg:inline-flex md:inline-flex">
                                     <Link href="/createPost" passHref>
-                                        <button className="rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
+                                        <button className=" rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
                                             Create Post
                                         </button>
                                     </Link>
@@ -86,14 +86,14 @@ function Header() {
                             </>
                         ) : (
                             <>
-                                <li className="primary-btn">
+                                <li className="primary-btn hidden lg:inline-flex md:inline-flex">
                                     <Link href="/login" passHref>
                                         Log in
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/register" passHref>
-                                        <button className="rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
+                                        <button className="hidden lg:inline-flex md:inline-flex rounded-md border border-blue-700 py-2 px-3  text-[15px] font-medium text-blue-700 hover:bg-blue-700 hover:text-white hover:underline">
                                             Create Account
                                         </button>
                                     </Link>

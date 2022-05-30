@@ -55,6 +55,13 @@ function MiniProfile() {
                         <a>Settings</a>
                     </Link>
                 </li>
+                <li>
+                    <Link href="/createPost" passHref>
+                        <button className="primary-btn text-[15px] text-gray-600">
+                            Create Post
+                        </button>
+                    </Link>
+                </li>
                 <li
                     onClick={() => router.push("/signOutConf")}
                     className="primary-btn mt-3 border-t py-3 text-gray-600"

@@ -17,7 +17,7 @@ function Feed({ blogs }) {
     return (
         <div>
             {/* feed header */}
-            <ul className="flex space-x-7">
+            <ul className="flex space-x-7 xl:w-[80%] mx-auto">
                 <li className="cursor-pointer rounded py-2 px-3 font-semibold hover:bg-white hover:text-blue-600">
                     Relevant
                 </li>
@@ -37,12 +37,12 @@ function Feed({ blogs }) {
                 {blogs.map((blog) => (
                     <div
                         key={blog._id}
-                        className="my-2 cursor-pointer rounded-lg border border-gray-300 bg-white ring-2  ring-transparent hover:border-transparent hover:ring-blue-700"
+                        className="my-2 cursor-pointer rounded-lg border border-gray-300 bg-white ring-2  ring-transparent hover:border-transparent hover:ring-blue-700  2xl:w-[80%] mx-auto"
                         onClick={() => router.push(`/blog/${blog.slug}`)}
                     >
                         <div className="object-contain">
                             <img
-                                className="rounded-t-lg w-full lg:h-[250px] md:h-[250px] h-full"
+                                className="rounded-t-lg  w-full lg:h-[250px] md:h-[250px] h-full"
                                 src={blog.bannerImg}
                                 alt=""
                             />
