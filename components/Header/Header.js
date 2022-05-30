@@ -41,9 +41,9 @@ function Header() {
                             </Link>
                         </div>
                         {/* search */}
-                        <div className="relative">
+                        <div className="relative hidden lg:block md:block">
                             <input
-                                className="w-full rounded border-gray-300 py-[6px] text-black lg:w-[400px] "
+                                className=" w-full rounded border-gray-300 py-[6px] text-black lg:w-[400px] "
                                 type="text"
                                 placeholder="Search..."
                             />
@@ -77,7 +77,7 @@ function Header() {
                                     className="relative rounded-full border-4 border-transparent hover:border-gray-100"
                                 >
                                     <img
-                                        className="h-8 w-8 cursor-pointer rounded-full "
+                                        className="h-8 w-8  cursor-pointer rounded-full "
                                         src={user.photoURL}
                                         alt=""
                                     />
